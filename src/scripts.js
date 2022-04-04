@@ -45,18 +45,12 @@ let popupIngredients = document.getElementById('popupIngredients');
 let popupToCookIcon = document.getElementById('popupAddCook');
 let popupSaveIcon = document.getElementById('popupAddSaved');
 
-const filterBreakfast = document.getElementById('breakfast');
-const filterLunch = document.getElementById('lunch');
-const filterDinner = document.getElementById('dinner');
-const filterSnack = document.getElementById('snack');
-const filterDip = document.getElementById('dip');
-const resetFilters = document.getElementById('clear');
-
 //~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const createEventListeners = (recipeRepository, user) => {
   popUp.addEventListener('click', (e) => {
     hidePopUp(e);
+    form.reset()
     if(user.viewingSavedRecipe) {
       createRecipePreview(user.favoriteRecipes, e);
     } else {
@@ -83,8 +77,6 @@ const createEventListeners = (recipeRepository, user) => {
     })
   }
 
-
-
   generateRadioButtons()
 
   form.addEventListener('click', (e) => {
@@ -92,7 +84,7 @@ const createEventListeners = (recipeRepository, user) => {
       displayFilteredTags(e.target.value, user, recipeRepository)
     } 
     if(e.target.id === 'clear') {
-      resetPageRender(recipeRepository, user, e);
+      resetPageRender(recipeRepository, user);
     }
   })
   
@@ -100,7 +92,7 @@ const createEventListeners = (recipeRepository, user) => {
       if(searchBar.value) {
         displayRecipesByName(searchBar.value, recipeRepository, user);
       } else {
-        resetPageRender(recipeRepository, user, e)
+        resetPageRender(recipeRepository, user)
       }
   });
 
@@ -117,6 +109,7 @@ const createEventListeners = (recipeRepository, user) => {
       toggleHidden(savedRecipesBar);
       toggleHidden(allRecipesBar);
       createRecipePreview(user.favoriteRecipes, e);
+      form.reset()
     }
     user.viewingSavedRecipe = true;
   });
@@ -126,24 +119,13 @@ const createEventListeners = (recipeRepository, user) => {
       user.viewingSavedRecipe = false;
       toggleHidden(allRecipesBar);
       toggleHidden(savedRecipesBar);
-      resetPageRender(recipeRepository, user, e)
+      resetPageRender(recipeRepository, user);
+      form.reset()
     };
   });
 };
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  let determineIfFormIsChecked = () => {
-    let nodes = form.childNodes
-    let output = {node: undefined, checked: false}
-    nodes.forEach((node) => {
-        if(node.checked) {
-          output.node = node
-          output.checked = node.checked
-        }
-    })
-    return output
-  }
 
   let saveRecipeToCook = (e, recipeRepository, user) => {
     let recipe = recipeRepository.allRecipes.find((recipe) => {
@@ -151,24 +133,14 @@ const createEventListeners = (recipeRepository, user) => {
     });
     user.addRecipeToCook(recipe);
     toggleToCookIcon(e, recipe);
-  };
+  }
 
-  let resetPageRender = (recipeRepository, user, e) => {
-    let input = determineIfFormIsChecked()
+  let resetPageRender = (recipeRepository, user) => {
     switch(true) {
       case user.viewingSavedRecipe:
         createRecipePreview(user.favoriteRecipes);
         break
-      case e.target.id === 'clear':
-        console.log('163')
-        createRecipePreview(recipeRepository.allRecipes);
-        break
-      case input.checked:
-        console.log('line167')
-        displayFilteredTags(input.node.value, user, recipeRepository)
-        break
       default:
-        console.log('line170')
         createRecipePreview(recipeRepository.allRecipes);
     }
   };
