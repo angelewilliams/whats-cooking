@@ -66,14 +66,16 @@ We were tasked with utilizing data from an API as well as using Webpack for the 
 <!-- GETTING STARTED -->
 ## Getting Started
 
+### NPM Install
+
 To start with, clone down the Repo on to your local machine. 
 Then, run NPM install in the console inside of that repository using this code.
 
-  npm install 
+npm install 
 
 after you have run npm install inside of your copy of this repo, run this code.
 
-  npm start
+npm start
 
 This will run the webpack in the console so you can use the applications. after that is done, 
 there will be a large line of code that has populated in your terminal.
@@ -152,7 +154,6 @@ Dylan Duke
 
 Project Git-hub Link: [https://github.com/angelewilliams/whats-cooking](https://github.com/angelewilliams/whats-cooking)
 
-Project Deployment Link: []
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
