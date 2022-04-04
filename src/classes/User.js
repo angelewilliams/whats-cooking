@@ -6,6 +6,7 @@ class User {
     this.viewingSavedRecipe = false;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
+
   };
 
   favoriteARecipe(recipe) {
@@ -37,12 +38,18 @@ class User {
    });
   };
 
-  filterFavsByName(recipeName){
-    return this.favoriteRecipes.filter((favoriteRecipe) => {
-      return favoriteRecipe.name.includes(recipeName);
-    });
+  filterFavsByName(inputName){
+    return this.favoriteRecipes.filter((recipe) => {
+        let output = true
+        inputName.toLowerCase().split(' ').forEach((input) => {
+            if(!recipe.name.toLowerCase().split(' ').includes(input)) {
+              output = false
+            } 
+          })
+          return output
+        });
+      };
   };
-};
 
 
 export default User;

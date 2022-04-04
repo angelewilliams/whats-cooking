@@ -34,6 +34,7 @@ const searchBar = document.getElementById('searchBar');
 
 let savedRecipes = document.getElementById('saveRecipes');
 let savedRecipesBar = document.querySelector('.underline-box-saved');
+let form = document.getElementById('filterForm')
 
 let popUp = document.querySelector('.popup-div');
 let popUpShadow = document.getElementById('shadow');
@@ -44,18 +45,12 @@ let popupIngredients = document.getElementById('popupIngredients');
 let popupToCookIcon = document.getElementById('popupAddCook');
 let popupSaveIcon = document.getElementById('popupAddSaved');
 
-const filterBreakfast = document.getElementById('breakfast');
-const filterLunch = document.getElementById('lunch');
-const filterDinner = document.getElementById('dinner');
-const filterSnack = document.getElementById('snack');
-const filterDip = document.getElementById('dip');
-const resetFilters = document.getElementById('clear');
-
 //~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const createEventListeners = (recipeRepository, user) => {
   popUp.addEventListener('click', (e) => {
     hidePopUp(e);
+    form.reset()
     if(user.viewingSavedRecipe) {
       createRecipePreview(user.favoriteRecipes, e);
     } else {
@@ -75,32 +70,30 @@ const createEventListeners = (recipeRepository, user) => {
     };
   });
 
-  filterBreakfast.addEventListener('click', () => {
-      displayFilteredTags('breakfast', user, recipeRepository);
-  });
+  let generateRadioButtons = () => {
+    recipeRepository.tags.forEach((tag) => {
+      form.innerHTML += `<input type="radio" id="${tag}" data-filterId="filter" name="filter" value="${tag}">
+      <label for="${tag}">${tag}</label><br>` 
+    })
+  }
 
-  filterLunch.addEventListener('click', () => {
-      displayFilteredTags('lunch', user, recipeRepository);
-  });
+  generateRadioButtons()
 
-  filterDinner.addEventListener('click', () => {
-      displayFilteredTags('dinner', user, recipeRepository);
-  });
-
-  filterSnack.addEventListener('click', () => {
-      displayFilteredTags('snack', user, recipeRepository);
-  });
-
-  filterDip.addEventListener('click', () => {
-      displayFilteredTags('dip', user, recipeRepository);
-  });
-
-  resetFilters.addEventListener('click', () => {
+  form.addEventListener('click', (e) => {
+    if(e.target.dataset.filterid) {
+      displayFilteredTags(e.target.value, user, recipeRepository)
+    } 
+    if(e.target.id === 'clear') {
       resetPageRender(recipeRepository, user);
-  });
-
+    }
+  })
+  
   searchBar.addEventListener('input', () => {
-      displayRecipesByName(searchBar.value, recipeRepository, user);
+      if(searchBar.value) {
+        displayRecipesByName(searchBar.value, recipeRepository, user);
+      } else {
+        resetPageRender(recipeRepository, user)
+      }
   });
 
   popupToCookIcon.addEventListener('click', (e) => {
@@ -116,17 +109,19 @@ const createEventListeners = (recipeRepository, user) => {
       toggleHidden(savedRecipesBar);
       toggleHidden(allRecipesBar);
       createRecipePreview(user.favoriteRecipes, e);
+      form.reset()
     }
     user.viewingSavedRecipe = true;
   });
 
-  allRecipes.addEventListener('click', () => {
+  allRecipes.addEventListener('click', (e) => {
     if(user.viewingSavedRecipe) {
+      user.viewingSavedRecipe = false;
       toggleHidden(allRecipesBar);
       toggleHidden(savedRecipesBar);
-      createRecipePreview(recipeRepository.allRecipes);
+      resetPageRender(recipeRepository, user);
+      form.reset()
     };
-    user.viewingSavedRecipe = false;
   });
 };
 
@@ -138,14 +133,16 @@ const createEventListeners = (recipeRepository, user) => {
     });
     user.addRecipeToCook(recipe);
     toggleToCookIcon(e, recipe);
-  };
+  }
 
   let resetPageRender = (recipeRepository, user) => {
-    if(user.viewingSavedRecipe) {
-      createRecipePreview(user.favoriteRecipes);
-    } else {
-      createRecipePreview(recipeRepository.allRecipes);
-    };
+    switch(true) {
+      case user.viewingSavedRecipe:
+        createRecipePreview(user.favoriteRecipes);
+        break
+      default:
+        createRecipePreview(recipeRepository.allRecipes);
+    }
   };
 
   let identifyRecipe = (e, recipeRepository, user) => {
