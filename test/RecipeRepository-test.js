@@ -34,9 +34,9 @@ describe('Recipe Repository', () => {
   });
 
   it('filterByTag should NOT affect the length of the allRecipes property array', () => {
-    expect(repository.allRecipes.length).to.equal(2);
+    expect(repository.allRecipes.length).to.equal(3);
     repository.filterByTag('snack');
-    expect(repository.allRecipes.length).to.equal(2);
+    expect(repository.allRecipes.length).to.equal(3);
   });
 
   it('filterbyName should be a method of RecipeRepository', ()=>{
@@ -51,7 +51,6 @@ describe('Recipe Repository', () => {
   it('should be able to record all individual tags from the data set', () => {
     repository.getTags(recipeData);
     const cookieTag = recipeData[0].tags[0];
-    console.log(repository.tags);
     expect(repository.tags[0]).to.equal(cookieTag);
   })
 

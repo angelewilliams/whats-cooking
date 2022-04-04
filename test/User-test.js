@@ -3,7 +3,7 @@ import Recipe from '../src/classes/Recipe';
 import User from '../src/classes/User';
 const {recipeData, usersData, ingredientsData} = require('../src/data/sampleDatasets');
 
-describe.only('User', () => {
+describe('User', () => {
   let user, user2, recipe0, recipe1, recipe2;
 
   beforeEach(() => {
