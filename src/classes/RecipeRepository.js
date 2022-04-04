@@ -35,7 +35,7 @@ class RecipeRepository {
      inputName.toLowerCase().split(' ').forEach((input) => {
         if(!recipe.name.toLowerCase().split(' ').includes(input)) {
           output = false
-        } 
+        }
       })
       return output
     });
