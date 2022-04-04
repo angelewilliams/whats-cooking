@@ -29,9 +29,15 @@ class RecipeRepository {
    });
   };
 
-  filterByName(recipeName){
+  filterByName(inputName){
     return this.allRecipes.filter((recipe) => {
-      return recipe.name.includes(recipeName);
+    let output = true
+     inputName.toLowerCase().split(' ').forEach((input) => {
+        if(!recipe.name.toLowerCase().split(' ').includes(input)) {
+          output = false
+        } 
+      })
+      return output
     });
   };
 };
