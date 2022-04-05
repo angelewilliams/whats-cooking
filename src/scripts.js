@@ -73,21 +73,21 @@ const createEventListeners = (recipeRepository, user) => {
   let generateRadioButtons = () => {
     recipeRepository.tags.forEach((tag) => {
       form.innerHTML += `<input type="radio" id="${tag}" data-filterId="filter" name="filter" value="${tag}">
-      <label for="${tag}">${tag}</label><br>` 
+      <label for="${tag}">${tag}</label><br>`
     })
-  }
+  };
 
-  generateRadioButtons()
+  generateRadioButtons();
 
   form.addEventListener('click', (e) => {
     if(e.target.dataset.filterid) {
       displayFilteredTags(e.target.value, user, recipeRepository)
-    } 
+    }
     if(e.target.id === 'clear') {
       resetPageRender(recipeRepository, user);
     }
-  })
-  
+  });
+
   searchBar.addEventListener('input', () => {
       if(searchBar.value) {
         displayRecipesByName(searchBar.value, recipeRepository, user);
@@ -133,7 +133,7 @@ const createEventListeners = (recipeRepository, user) => {
     });
     user.addRecipeToCook(recipe);
     toggleToCookIcon(e, recipe);
-  }
+  };
 
   let resetPageRender = (recipeRepository, user) => {
     switch(true) {
@@ -210,7 +210,7 @@ var createRecipePreview = (recipes) => {
           <h3 data-id="${recipe.id}">${recipe.name}</h3>
         </section>
         <div data-id="${recipe.id}" class="recipe-img">
-          <img data-id="${recipe.id}" src="${recipe.img}">
+          <img data-id="${recipe.id}" src="${recipe.img}" alt="Image of ${recipe.name}">
         </div>
         <section class="recipe-info" data-id="${recipe.id}">
           <section class="tag-icon-section" data-id="${recipe.id}">
@@ -263,6 +263,7 @@ const displayRecipesByName = (inputName, recipeRepository, user) => {
 
 const displayPopUp = (recipe) => {
   popupImage.src = recipe.img;
+  popupImage.alt = `Image of ${recipe.name}`;
   popupName.innerHTML = recipe.name;
   renderPopupInstructions(recipe);
   renderPopupIngredients(recipe);
@@ -294,7 +295,7 @@ const renderPopupIngredients = (recipe) => {
   recipe.ingredients.forEach((ingredient, i) => {
     let newListIngredient = document.createElement('li');
     newListIngredient.classList.add('ingredients-list');
-    newListIngredient.innerHTML = `${ingredient.name}:  ${(recipe.ingredientsInfo[i].quantity.amount).toFixed(2)}${recipe.ingredientsInfo[i].quantity.unit}`;
+    newListIngredient.innerHTML = `${ingredient.name}: ${(recipe.ingredientsInfo[i].quantity.amount).toFixed(2)}  ${recipe.ingredientsInfo[i].quantity.unit}`;
     popupIngredients.appendChild(newListIngredient);
   });
 };

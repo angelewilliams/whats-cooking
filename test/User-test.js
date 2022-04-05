@@ -62,11 +62,11 @@ describe('User', () => {
     expect(output[0].tags[0]).to.equal('antipasti')
   });
 
-  it('should be able to filter favoriteRecipes by tag', () => {
+  it('should be able to filter favoriteRecipes by name', () => {
     user.favoriteARecipe(recipe0);
     user.favoriteARecipe(recipe1);
     user.favoriteARecipe(recipe2);
-    let output = user.filterFavsByName('Grilled Pork Chop');
+    let output = user.filterFavsByName('Grilled Pork Chops');
     expect(output[0].name).to.equal(recipe1.name);
   });
 
