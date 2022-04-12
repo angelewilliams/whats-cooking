@@ -120,14 +120,14 @@ label:hover{
   background-color: white;
   border-radius: 25px;
   overflow: hidden;
-  margin:3px;
+  margin: 6px;
   box-shadow: inset  2px 2px 3px 2px #ffffff,
   2px 2px 4px 2px #1d1d1d;
 }
 
 .recipe-preview:hover {
   /* cursor: pointer; */
-transform: scale(1.1); 
+transform: scale(1.1);
 }
 
 .recipe-heading {

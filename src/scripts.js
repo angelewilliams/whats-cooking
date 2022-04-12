@@ -21,9 +21,9 @@ const instantiateClasses = (recipeData, ingredientData, userData) => {
 };
 
 apiCalls.then(data => {
-  let userData = data[0].usersData;
-  let recipeData = data[1].recipeData;
-  let ingredientData = data[2].ingredientsData;
+  let userData = data[0];
+  let recipeData = data[1];
+  let ingredientData = data[2];
   instantiateClasses(recipeData, ingredientData, userData);
 });
 
