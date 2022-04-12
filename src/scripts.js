@@ -205,7 +205,7 @@ var createRecipePreview = (recipes) => {
     let srcCook = findCookIcon(recipe);
     let srcSave = findSaveIcon(recipe);
     recipeSection.innerHTML += `
-      <section class="recipe-preview" data-id="${recipe.id}">
+      <button class="recipe-preview" data-id="${recipe.id}">
         <section class="recipe-heading" data-id="${recipe.id}">
           <h3 data-id="${recipe.id}">${recipe.name}</h3>
         </section>
@@ -220,7 +220,7 @@ var createRecipePreview = (recipes) => {
             </div>
           </section>
         </section>
-      </section>
+      </button>
     `
   });
 };
