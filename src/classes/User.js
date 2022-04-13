@@ -2,7 +2,7 @@ class User {
   constructor(userData) {
     this.name = userData.name;
     this.id = userData.id;
-    this.pantry = userData.pantry;
+    // this.pantry = new Pantry(userData);
     this.viewingSavedRecipe = false;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
@@ -44,7 +44,7 @@ class User {
         inputName.toLowerCase().split(' ').forEach((input) => {
             if(!recipe.name.toLowerCase().split(' ').includes(input)) {
               output = false
-            } 
+            }
           })
           return output
         });
