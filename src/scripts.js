@@ -2,7 +2,7 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import './images/turing-logo.png';
-import './images/icon_banner_add.png';
+import './images/icon_banner_add.png'; 
 import './images/icon_banner_remove.png';
 import './images/icon_fire_symbol_lit.png';
 import './images/icon_fire_symbol_unlit.png';

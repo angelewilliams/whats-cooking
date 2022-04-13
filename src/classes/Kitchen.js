@@ -1,11 +1,11 @@
 
 
-// class Pantry {
-//   constructor (userData) {
-//     this.pantryStorage = userData.pantry;
+class Kitchen {
+  constructor (pantry) {
+    this.pantry = pantry;
 //     this.uniqueIngredients =  ;
-//   }
-// }
+  }
+}
 
 // unique ingredients = ingredientsData
 // make those instances of our ingredients
@@ -42,3 +42,5 @@
     //   "ingredient": 14412,
     //   "amount": 3
     // }
+
+    export default Kitchen;

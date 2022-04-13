@@ -1,12 +1,13 @@
+import Kitchen from './Kitchen'
+
 class User {
   constructor(userData) {
     this.name = userData.name;
     this.id = userData.id;
-    // this.pantry = new Pantry(userData);
+    this.kitchen = new Kitchen(userData.pantry);
     this.viewingSavedRecipe = false;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
-
   };
 
   favoriteARecipe(recipe) {
