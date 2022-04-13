@@ -5,6 +5,16 @@ class Kitchen {
     this.pantry = pantry;
 //     this.uniqueIngredients =  ;
   }
+
+  checkPantry (recipe) {
+      recipe.ingredientsInfo.reduce((acc, ingredient) => {
+
+      }, [])
+    //iterate through recipe ingredients
+      //for each ingredient, iterate through pantry and see if kitchen 
+      //has enough to make recipe (check if pantry nuber is bigger than recipe number)
+      //if it fails, add that ingredient to return, if it gets to the end, return nothing
+  }
 }
 
 // unique ingredients = ingredientsData
