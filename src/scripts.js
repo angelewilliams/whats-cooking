@@ -21,9 +21,9 @@ const instantiateClasses = (recipeData, ingredientData, userData) => {
 };
 
 apiCalls.then(data => {
-  let userData = data[0].usersData;
-  let recipeData = data[1].recipeData;
-  let ingredientData = data[2].ingredientsData;
+  let userData = data[0];
+  let recipeData = data[1];
+  let ingredientData = data[2];
   instantiateClasses(recipeData, ingredientData, userData);
 });
 
@@ -49,51 +49,19 @@ let popupSaveIcon = document.getElementById('popupAddSaved');
 
 const createEventListeners = (recipeRepository, user) => {
   popUp.addEventListener('click', (e) => {
-    hidePopUp(e);
-    form.reset()
-    if(user.viewingSavedRecipe) {
-      createRecipePreview(user.favoriteRecipes, e);
-    } else {
-        createRecipePreview(recipeRepository.allRecipes, e);
-      }
+    hidePopup(e);
   });
 
   recipeSection.addEventListener('click', (e) => {
-    displayRecipeDetail(e, recipeRepository);
-
-    if(e.target.dataset.cookid){
-      saveRecipeToCook(e, recipeRepository, user);
-    };
-
-    if(e.target.dataset.saveid) {
-      identifyRecipe(e, recipeRepository, user);
-    };
+    displayRecipeSection(e)
   });
 
-  let generateRadioButtons = () => {
-    recipeRepository.tags.forEach((tag) => {
-      form.innerHTML += `<input type="radio" id="${tag}" data-filterId="filter" name="filter" value="${tag}">
-      <label for="${tag}">${tag}</label><br>`
-    })
-  };
-
-  generateRadioButtons();
-
   form.addEventListener('click', (e) => {
-    if(e.target.dataset.filterid) {
-      displayFilteredTags(e.target.value, user, recipeRepository)
-    }
-    if(e.target.id === 'clear') {
-      resetPageRender(recipeRepository, user);
-    }
+    clickForm(e)
   });
 
   searchBar.addEventListener('input', () => {
-      if(searchBar.value) {
-        displayRecipesByName(searchBar.value, recipeRepository, user);
-      } else {
-        resetPageRender(recipeRepository, user)
-      }
+    checkSearchBar()
   });
 
   popupToCookIcon.addEventListener('click', (e) => {
@@ -105,6 +73,53 @@ const createEventListeners = (recipeRepository, user) => {
   });
 
   savedRecipes.addEventListener('click', (e) => {
+    checkSavedRecipesView(e)
+  });
+
+  allRecipes.addEventListener('click', (e) => {
+    checkAllRecipesView(e)
+  });
+
+  const hidePopup = (e) => {
+    togglePopUp(e);
+    form.reset()
+    if(user.viewingSavedRecipe) {
+      createRecipePreview(user.favoriteRecipes, e);
+    } else {
+        createRecipePreview(recipeRepository.allRecipes, e);
+    };
+  };
+
+  const displayRecipeSection = (e) => {
+    displayRecipeDetail(e, recipeRepository);
+
+    if(e.target.dataset.cookid){
+      saveRecipeToCook(e, recipeRepository, user);
+    };
+
+    if(e.target.dataset.saveid) {
+      identifyRecipe(e, recipeRepository, user);
+    };
+  }
+
+  const clickForm = (e) => {
+    if(e.target.dataset.filterid) {
+      displayFilteredTags(e.target.value, user, recipeRepository)
+    }
+    if(e.target.id === 'clear') {
+      resetPageRender(recipeRepository, user);
+    }
+  }
+
+  const checkSearchBar = () => {
+    if(searchBar.value) {
+      displayRecipesByName(searchBar.value, recipeRepository, user);
+    } else {
+      resetPageRender(recipeRepository, user)
+    }
+  }
+
+  const checkSavedRecipesView = (e) => {
     if(!user.viewingSavedRecipe) {
       toggleHidden(savedRecipesBar);
       toggleHidden(allRecipesBar);
@@ -112,9 +127,9 @@ const createEventListeners = (recipeRepository, user) => {
       form.reset()
     }
     user.viewingSavedRecipe = true;
-  });
+  }
 
-  allRecipes.addEventListener('click', (e) => {
+  const checkAllRecipesView = (e) => {
     if(user.viewingSavedRecipe) {
       user.viewingSavedRecipe = false;
       toggleHidden(allRecipesBar);
@@ -122,7 +137,16 @@ const createEventListeners = (recipeRepository, user) => {
       resetPageRender(recipeRepository, user);
       form.reset()
     };
-  });
+  }
+
+  let generateRadioButtons = () => {
+    recipeRepository.tags.forEach((tag) => {
+      form.innerHTML += `<input type="radio" id="${tag}" data-filterId="filter" name="filter" value="${tag}">
+      <label for="${tag}">${tag}</label><br>`
+    })
+  };
+
+  generateRadioButtons();
 };
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,7 +205,7 @@ const createEventListeners = (recipeRepository, user) => {
     e.target.src = './images/icon_fire_symbol_unlit.png';
   };
 
-  let hidePopUp = (e) => {
+  let togglePopUp = (e) => {
     if(e.target.id === 'specificRecipe') {
       toggleHidden(popUp);
       toggleHidden(popUpShadow);
