@@ -3,17 +3,21 @@
 class Kitchen {
   constructor (pantry) {
     this.pantry = pantry;
+    this.groceryList;
 //     this.uniqueIngredients =  ;
   }
 
   checkPantry (recipe) {
-      recipe.ingredientsInfo.reduce((acc, ingredient) => {
-
-      }, [])
-    //iterate through recipe ingredients
-      //for each ingredient, iterate through pantry and see if kitchen 
-      //has enough to make recipe (check if pantry nuber is bigger than recipe number)
-      //if it fails, add that ingredient to return, if it gets to the end, return nothing
+        this.groceryList =  recipe.ingredientsInfo.filter((ingredient) => {
+        let output = true;
+        this.pantry.forEach((pantryIngredient) => {
+          if(pantryIngredient.ingredient === ingredient.id  && pantryIngredient.amount > ingredient.quantity.amount){
+            output = false;
+          }
+        })
+        return output
+      })
+      return this.groceryList
   }
 }
 

@@ -30,8 +30,8 @@ describe.only('Kitchen', () => {
     })
 
     it('should be able to check if pantry has the ingredients to make recipe', () => {
-        // console.log(kitchen)
-        recipeResult = [
+        // recipe result is the recipe ingredients without the one ingredient we have enough for
+        const recipeResult = [
             { id: 18372, quantity: { amount: 0.5, unit: 'tsp' } },
             { id: 1123, quantity: { amount: 1, unit: 'large' } },
             { id: 19335, quantity: { amount: 0.5, unit: 'c' } },
@@ -44,10 +44,9 @@ describe.only('Kitchen', () => {
             { id: 2050, quantity: { amount: 0.5, unit: 'tsp' } }
           ]
 
-        console.log("recipe;", recipe.ingredientsInfo)
-        console.log("kitchen;", kitchen.pantry) 
-        
 
-        expect(kitchen.checkPantry).to.equal(recipeResult)
+        let pantryCheck = kitchen.checkPantry(recipe)
+
+        expect(pantryCheck).to.deep.equal(recipeResult)
     })
 })
