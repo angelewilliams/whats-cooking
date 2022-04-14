@@ -80,7 +80,15 @@ const ingredientsData = [
           {
             "ingredient": 14412,
             "amount": 3
-          }
+          },
+          {
+            "ingredient": 19206,
+            "amount": 2
+          },
+          {
+            "ingredient": 2047,
+            "amount": 1
+          },
         ]
       },
       {
@@ -380,6 +388,7 @@ const ingredientsData = [
           "dinner"
         ]
       }
+
   ];
 
 
