@@ -25,8 +25,8 @@ describe('User', () => {
   it('should populate user data', () => {
     expect(user.name).to.equal("Julia Childs");
     expect(user.id).to.equal(3277);
-    expect(user.pantry.length).to.equal(usersData[0].pantry.length);
-    expect(user.pantry[0].amount).to.equal(4);
+    expect(user.kitchen.pantry.length).to.equal(usersData[0].pantry.length);
+    expect(user.kitchen.pantry[0].amount).to.equal(4);
   });
 
 
@@ -53,6 +53,12 @@ describe('User', () => {
     user.addRecipeToCook(recipe2);
     expect(user.recipesToCook.length).to.equal(1);
   });
+
+  it('should be able to remove a recipe from recipesToCook', () => {
+    user.removeRecipeFromCookList(recipe2);
+    expect(user.recipesToCook.length).to.equal(0);
+  });
+
 
   it('should be able to filter favoriteRecipes by tag', () => {
     user.favoriteARecipe(recipe0);

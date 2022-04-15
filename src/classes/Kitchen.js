@@ -29,9 +29,27 @@ class Kitchen {
       })
       return groceryListItem
     })
+  }
+
+  addToPantry() {
+  // As a user, I should be able to add more ingredients to my pantry
+  // from form input most likely also needs to translate into a POST to get added/update to the user API
+  //We will want to return an object that we can use as the formData to use in our POST request
 
   }
 
-}
+  cookRecipe(){
+  //As a user, when I cook a meal, those ingredients should be removed from my pantry
+  //input: recipe ingredients and amounts AND pantry ingredient amounts
+  // will also need to remove the ingredient from the user API
+  // 
+
+  }
+
+};
+
+
+
+
 
     export default Kitchen;
