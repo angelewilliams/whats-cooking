@@ -167,25 +167,31 @@ const createEventListeners = (recipeRepository, user) => {
     let recipe = recipeRepository.allRecipes.find((recipe) => {
       return `${recipe.id}` ===  e.target.dataset.cookid
     });
-
-
-    if(recipe.wantToCook && user.viewingSavedRecipe) {
+    if(recipe.wantToCook) {
       user.removeRecipeFromCookList(recipe);
       toggleToCookIcon(e, recipe);
-      // createRecipePreview(user.viewingSavedRecipe)
-
-    } else if(recipe.wantToCook && !user.viewingSavedRecipe) {
-      user.removeRecipeFromCookList(recipe);
-      toggleToCookIcon(e, recipe);
-
-    } else if(!recipe.wantToCook && !user.viewingSavedRecipe) {
+    } else if(!recipe.wantToCook) {
       user.addRecipeToCook(recipe);
       toggleToCookIcon(e, recipe);
+    }
 
-    } else if(!recipe.wantToCook && user.viewingSavedRecipe) {
-      user.addRecipeToCook(recipe);
-      toggleToCookIcon(e, recipe);
-    };
+    // if(recipe.wantToCook && user.viewingSavedRecipe) {
+    //   user.removeRecipeFromCookList(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //   // createRecipePreview(user.viewingSavedRecipe)
+    //
+    // } else if(recipe.wantToCook && !user.viewingSavedRecipe) {
+    //   user.removeRecipeFromCookList(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //
+    // } else if(!recipe.wantToCook && !user.viewingSavedRecipe) {
+    //   user.addRecipeToCook(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //
+    // } else if(!recipe.wantToCook && user.viewingSavedRecipe) {
+    //   user.addRecipeToCook(recipe);
+    //   toggleToCookIcon(e, recipe);
+    // };
 
   };
 
