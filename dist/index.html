@@ -7,23 +7,72 @@
   </head>
   <body>
     <header>
-      <h1>Whats Cooking</h1>
-      <section class="nav-bar">
+      <div class="site-header">
+        <h1>Whats Cooking?</h1>
+      </div>
+      <nav class="nav-bar">
         <div class="page-select">
-          <div class="nav-bar-item" id="allRecipes">
+          <button class="nav-bar-item" id="allRecipes">
             <h2>All Recipes</h2>
             <div class= "underline-box-all underline-box"></div>
-          </div>
-          <div class="nav-bar-item" id="saveRecipes">
+          </button>
+          <button class="nav-bar-item" id="saveRecipes">
             <h2>Saved Recipes</h2>
             <div class= "underline-box-saved underline-box hidden"></div>
-          </div>
+          </button>
+          <button class="nav-bar-item" id="userKitchen">
+            <h2>Neil's Kitchen</h2>
+            <div class= "underline-box-saved underline-box hidden"></div>
+          </button>
         </div>
-      </section>
+      </nav>
     </header>
     <main>
+      <section class="kitchen hidden">
+        <section class="kitchen-pantry">
+          <div>
+            <h3 class='sidebar-header'>Neil's Pantry</h3>
+          </div>
+          <div class="user-pantry-wrapper">
+            <ul class="user-pantry">
+              <li>12 Pumpkins</li><br>
+              <li>12 Pumpkins</li><br>
+              <li>12 Pumpkins</li><br>
+              <li>12 Pumpkins</li><br>
+              <li>12 Pumpkins</li><br>
+              <li>12 Pumpkins</li><br>
+            </ul>
+          </div>
+        </section>
+        <section class="cook-recipe">
+          <div class="recipe-to-cook"></div>
+          <div></div>
+        </section>
+        <section class="pantry-add-ingredients">
+          <div>
+            <h3 class="sidebar-header">Procure Ingredients</h3>
+          </div>
+          <div>
+            <div>
+              <input type="search" class="procure-ingredients">
+              <button class="button-add-ingredient">Add Ingredient</button>
+              <div class="user-pantry-wrapper">
+                <ul class="user-pantry">
+                  <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
+                  <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
+                  <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
+                  <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
+                  <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
+                </ul>
+              </div> 
+            </div>
+            <button class="button-buy-ingredients">Buy Ingredients</button>
+          </div>
+        </section>
+        <section class="recipes-to-cook">Recipes to Cook</section>
+      </section>
       <section class="filter-section">
-        <h3 class="filter-header">Filters</h3>
+        <h3 class="sidebar-header">Filters</h3>
         <form id="filterForm">
           <h4>Meal Type</h4>
           <button id="clear" type='reset' class="reset-filters-button" name="meal-type">
