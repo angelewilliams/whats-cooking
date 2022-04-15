@@ -47,15 +47,20 @@ describe.only('Kitchen', () => {
 
         let pantryCheck = kitchen.checkPantry(recipe)
 
-        console.log('groceryList: ', kitchen.groceryList);
         expect(kitchen.groceryList).to.deep.equal(recipeResult)
         expect(pantryCheck).to.equal('It looks like you still need to pick up some items--We will put a grocery list together for you.')
-    })
+    });
 
-    it('should be able to tell you what ', () => {
+    it('should be able to determine the amounts of missing ingredients still needed to cook a recipe', () => {
       kitchen.checkPantry(recipe);
+      let itemToCheck = kitchen.groceryList[3].quantity.amount;
+
+      expect(itemToCheck).to.equal(3);
+
       kitchen.updateAmountToBuy();
-      // console.log(kitchen.groceryList)
-      //need an expect here
-    })
+      itemToCheck = kitchen.groceryList[3].quantity.amount;
+
+      expect(itemToCheck).to.equal(1);
+
+    });
 })
