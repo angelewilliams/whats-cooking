@@ -1,12 +1,13 @@
+import Kitchen from './Kitchen'
+
 class User {
   constructor(userData) {
     this.name = userData.name;
     this.id = userData.id;
-    this.pantry = userData.pantry;
+    this.kitchen = new Kitchen(userData.pantry);
     this.viewingSavedRecipe = false;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
-
   };
 
   favoriteARecipe(recipe) {
@@ -44,7 +45,7 @@ class User {
         inputName.toLowerCase().split(' ').forEach((input) => {
             if(!recipe.name.toLowerCase().split(' ').includes(input)) {
               output = false
-            } 
+            }
           })
           return output
         });

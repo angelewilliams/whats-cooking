@@ -2,7 +2,7 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import './images/turing-logo.png';
-import './images/icon_banner_add.png';
+import './images/icon_banner_add.png'; 
 import './images/icon_banner_remove.png';
 import './images/icon_fire_symbol_lit.png';
 import './images/icon_fire_symbol_unlit.png';
@@ -18,6 +18,7 @@ const instantiateClasses = (recipeData, ingredientData, userData) => {
   let user = new User(generateRandomUser());
   createRecipePreview(recipeRepository.allRecipes);
   createEventListeners(recipeRepository, user);
+  console.log(user.pantry)
 };
 
 apiCalls.then(data => {
@@ -26,7 +27,6 @@ apiCalls.then(data => {
   let ingredientData = data[2];
   instantiateClasses(recipeData, ingredientData, userData);
 });
-
 //~~~~~~~~~~~~~~~~~~~~ QUERY SELECTORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const recipeSection = document.getElementById('recipesSection');
 let allRecipesBar = document.querySelector('.underline-box-all');
