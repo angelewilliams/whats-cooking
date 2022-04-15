@@ -6,6 +6,7 @@ class User {
     this.id = userData.id;
     this.kitchen = new Kitchen(userData.pantry);
     this.viewingSavedRecipe = false;
+    this.viewingKitchen = false;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   };
@@ -31,6 +32,15 @@ class User {
       recipe.wantToCook = true;
       this.recipesToCook.push(recipe);
     };
+  };
+
+  removeRecipeFromCookList(recipe){
+    recipe.wantToCook = false;
+    this.recipesToCook.forEach((recipeToCook, i) => {
+      if(recipeToCook === recipe){
+        this.favoriteRecipes.splice(i, 1);
+      };
+    });
   };
 
   filterFavsByTag(tag) {

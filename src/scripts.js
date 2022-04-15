@@ -2,7 +2,7 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import './images/turing-logo.png';
-import './images/icon_banner_add.png'; 
+import './images/icon_banner_add.png';
 import './images/icon_banner_remove.png';
 import './images/icon_fire_symbol_lit.png';
 import './images/icon_fire_symbol_unlit.png';
@@ -151,22 +151,48 @@ const createEventListeners = (recipeRepository, user) => {
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  let resetPageRender = (recipeRepository, user) => {
+    switch(true) {
+      case user.viewingSavedRecipe:
+      createRecipePreview(user.favoriteRecipes);
+      break
+      // case user.viewingKitchen:
+      // createRecipePreview(user.favoriteRecipes);
+      default:
+      createRecipePreview(recipeRepository.allRecipes);
+    }
+  };
+
   let saveRecipeToCook = (e, recipeRepository, user) => {
     let recipe = recipeRepository.allRecipes.find((recipe) => {
       return `${recipe.id}` ===  e.target.dataset.cookid
     });
-    user.addRecipeToCook(recipe);
-    toggleToCookIcon(e, recipe);
-  };
-
-  let resetPageRender = (recipeRepository, user) => {
-    switch(true) {
-      case user.viewingSavedRecipe:
-        createRecipePreview(user.favoriteRecipes);
-        break
-      default:
-        createRecipePreview(recipeRepository.allRecipes);
+    if(recipe.wantToCook) {
+      user.removeRecipeFromCookList(recipe);
+      toggleToCookIcon(e, recipe);
+    } else if(!recipe.wantToCook) {
+      user.addRecipeToCook(recipe);
+      toggleToCookIcon(e, recipe);
     }
+
+    // if(recipe.wantToCook && user.viewingSavedRecipe) {
+    //   user.removeRecipeFromCookList(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //   // createRecipePreview(user.viewingSavedRecipe)
+    //
+    // } else if(recipe.wantToCook && !user.viewingSavedRecipe) {
+    //   user.removeRecipeFromCookList(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //
+    // } else if(!recipe.wantToCook && !user.viewingSavedRecipe) {
+    //   user.addRecipeToCook(recipe);
+    //   toggleToCookIcon(e, recipe);
+    //
+    // } else if(!recipe.wantToCook && user.viewingSavedRecipe) {
+    //   user.addRecipeToCook(recipe);
+    //   toggleToCookIcon(e, recipe);
+    // };
+
   };
 
   let identifyRecipe = (e, recipeRepository, user) => {

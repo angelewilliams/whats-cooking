@@ -53,7 +53,7 @@ describe('Recipe', () => {
 
 	it('should have be able to calculate the cost of its ingredients', () => {
 		let output = recipe.calculateCost();
-		expect(output).to.equal(17776);
+		expect(output).to.equal(16456);
 	})
 
 	it('should return an array of instructions', () => {
