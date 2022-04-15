@@ -1,23 +1,30 @@
 * {
   font-family: 'Alegreya', serif;
-  /* border: 1px solid red ; */
+  border: 1px solid red ;
+  margin: 0;
+}
+
+html {
+  height: 100vh;
 }
 
 body {
   background-color: #F0f0f0;
   display: grid;
-  margin: 0;
 }
-
-
 
 header {
   background-color: #324C54;
   display: flex;
-  justify-content: space-evenly;
-  height: 110px;
+  justify-content: space-between;
+  height: 10vh;
   width: 100%;
-  margin: 0,0;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+
 }
 
 h1 {
@@ -41,7 +48,7 @@ p {
 }
 
 main {
-  height: 800px;
+  height: 90vh;
   width: 100%;
   margin-top: 10px;
   display: flex;
@@ -53,8 +60,8 @@ main {
   display: flex;
   flex-direction: column;
   align-content: center;
-  justify-content: space-evenly;
-  height: 70%;
+  justify-content: center;
+  height: 100%;
   width: 60%;
 }
 
@@ -69,9 +76,9 @@ main {
 }
 
 .page-select {
+  width: 100%;
   display: flex;
   justify-content: space-around;
-  width: 100%;
 }
 
 .underline-page-select {
@@ -173,11 +180,10 @@ transform: scale(1.1);
   width: 30%
 }
 
-.filter-header {
+.sidebar-header {
   font-size: 25px;
   background-color: #7D98A1;
 }
-
 
 /* Pop-up window */
 .popup-shadow {
@@ -278,6 +284,75 @@ transform: scale(1.1);
   width: 100%;
   background-color: #7D98A1;
 }
+
+/*  KITCHEN DISPLAY  */
+
+.kitchen {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: .25fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  margin: 10px
+}
+
+
+  /* USERS PANTRY */
+
+.kitchen-pantry {
+  height: 100%;
+  width: 100%;
+  grid-row: span 2;
+  padding: 0;
+}
+
+.user-pantry {
+  list-style-type: none;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.user-pantry-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+/* ADD INGREDIENTS */
+
+.pantry-add-ingredients {
+  height: 100%;
+  width: 100%;
+  grid-row: span 2;
+}
+
+
+
+.recipes-to-cook {
+  height: 100%;
+  width: 100%;
+  grid-column-start: 2;
+  grid-row: 2 / 5;
+}
+
+
+/* COOK RECIPES */
+
+/* .recipe-to-cook {
+  
+} */
+
+.cook-recipe {
+  height: 100%;
+  width: 100%;
+}
+
+
+
+
 
 .hidden {
   display: none;
