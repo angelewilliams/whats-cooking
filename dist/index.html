@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya" rel="stylesheet">
-    <title>Whats Cookin</title>
+    <title>Whats Cooking</title>
   </head>
   <body>
     <header>
@@ -35,17 +35,12 @@
           </div>
           <div class="user-pantry-wrapper">
             <ul class="user-pantry">
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
             </ul>
           </div>
         </section>
         <section class="cook-recipe">
-          <div class="recipe-to-cook"></div>
+          <button class="cook-this-recipe" id="cookRecipe">Cook!</button>
+          <article class="recipe-to-cook" id="checkRecipe">Please Select A Recipe To View</article>
           <div></div>
         </section>
         <section class="pantry-add-ingredients">
@@ -64,12 +59,12 @@
                   <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
                   <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
                 </ul>
-              </div> 
+              </div>
             </div>
             <button class="button-buy-ingredients">Buy Ingredients</button>
           </div>
         </section>
-        <section class="recipes-to-cook">Recipes to Cook</section>
+        <section class="recipes-to-cook" id="recipesToCook">Recipes to Cook</section>
       </section>
       <div class="main-page">
         <section class="filter-section ">
@@ -106,7 +101,7 @@
           <div class="popup-ingredient">
             <h3>Ingredients</h3>
             <div id="popupIngredients"></div>
-          </div>        
+          </div>
           <div class="popup-instructions">
             <h3>Instructions</h3>
             <div id="popupInstructions"></div>

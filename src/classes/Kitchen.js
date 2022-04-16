@@ -44,7 +44,7 @@ class Kitchen {
   //As a user, when I cook a meal, those ingredients should be removed from my pantry
   //input: recipe ingredients and amounts AND pantry ingredient amounts
   // will also need to remove the ingredient from the user API
-  // 
+  //
 
   }
 
@@ -53,8 +53,8 @@ class Kitchen {
       let output;
 			ingredientData.forEach((dataPoint) => {
 				if(dataPoint.id === ingredient.ingredient) {
-					output = {name: dataPoint.name, amount: ingredient.amount}
-				}      
+					output = {id: dataPoint.id, name: dataPoint.name, amount: ingredient.amount}
+				}
 			});
 			return output;
 		});

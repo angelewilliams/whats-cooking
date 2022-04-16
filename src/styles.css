@@ -336,13 +336,19 @@ transform: scale(1.1);
   width: 100%;
   grid-column-start: 2;
   grid-row: 2 / 5;
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+
 }
 
 
 /* COOK RECIPES */
+/*
+.recipe-to-cook {
 
-/* .recipe-to-cook {
-  
 } */
 
 .cook-recipe {
