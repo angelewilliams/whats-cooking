@@ -7,6 +7,7 @@ class Kitchen {
 
   checkPantry (recipe) {
     this.currentRecipe = recipe
+    this.currentRecipe.canCook = false
         this.groceryList = recipe.ingredientsInfo.filter((ingredient) => {
         let output = true;
         this.pantry.forEach((pantryIngredient) => {
@@ -17,8 +18,11 @@ class Kitchen {
         return output;
       })
       if(!this.groceryList.length){
+        this.currentRecipe.canCook = true
         return `You are ready to cook ${recipe.name}!`
       }
+      this.currentRecipe.canCook = false
+      console.log( this.currentRecipe.canCook)
       return 'It looks like you still need to pick up some items--We will put a grocery list together for you.'
   }
 
