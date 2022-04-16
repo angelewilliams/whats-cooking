@@ -2,11 +2,11 @@ class Kitchen {
   constructor (pantry) {
     this.pantry = pantry;
     this.groceryList;
+    this.currentRecipe;
   }
 
-
-
   checkPantry (recipe) {
+    this.currentRecipe = recipe
         this.groceryList = recipe.ingredientsInfo.filter((ingredient) => {
         let output = true;
         this.pantry.forEach((pantryIngredient) => {
@@ -17,7 +17,7 @@ class Kitchen {
         return output;
       })
       if(!this.groceryList.length){
-        return 'You are ready to cook!'
+        return `You are ready to cook ${recipe.name}!`
       }
       return 'It looks like you still need to pick up some items--We will put a grocery list together for you.'
   }

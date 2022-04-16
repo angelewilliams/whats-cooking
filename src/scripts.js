@@ -100,11 +100,8 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
   });
 
   recipesToCook.addEventListener('click', (e) => {
-    //this is going to need to be where we figure out what recipeToCook was clicked on and
-    //then invoke the user.kitchen.checkRecipe and update grocery list methods and display it in
-    //the upper div on Neil's Kitchen 
+    selectRecipeDom(e, recipeRepository, user, ingredientData)
   })
-
 
   const hidePopup = (e) => {
     togglePopUp(e);
@@ -147,6 +144,7 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
 
   const checkSavedRecipesView = (e) => {
     if(!user.viewingSavedRecipe) {
+      user.viewingKitchen = false;
       toggleHidden(savedRecipesBar);
       toggleHidden(allRecipesBar);
       kitchenPage.classList.add('hidden');
@@ -158,7 +156,8 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
   }
 
   const checkAllRecipesView = (e) => {
-    if(user.viewingSavedRecipe) {
+    if(user.viewingSavedRecipe || user.viewingKitchen) {
+      user.viewingKitchen = false;
       user.viewingSavedRecipe = false;
       toggleHidden(allRecipesBar);
       toggleHidden(savedRecipesBar);
@@ -180,6 +179,21 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
 };
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  let selectRecipeDom = (e, recipeRepository, user) => {
+    let recipe = recipeRepository.allRecipes.find((recipe) => {
+      return `${recipe.id}` ===  e.target.dataset.id
+    });
+    let output = user.kitchen.checkPantry(recipe)
+    user.kitchen.updateAmountToBuy()
+    console.log(user.kitchen.groceryList)
+    checkRecipe.innerHTML = '';
+    checkRecipe.innerHTML = output;
+    user.kitchen.groceryList.forEach((ingredient) => {
+      checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p><br>`
+    })
+  }
+
   let displayKitchen = (e, user, ingredientData) => {
     renderUserIngredients(user, ingredientData);
     user.viewingKitchen = true;
@@ -197,9 +211,9 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
     // console.log(itemsToDisplay);
   }
 
-  let cookRecipe = (e) => {
-    //this is if a user is able to cook a given recipe and will remove the ingredients 'used' in post request
-  }
+  // let cookRecipe = (e) => {
+  //   //this is if a user is able to cook a given recipe and will remove the ingredients 'used' in post request
+  // }
 
   let resetPageRender = (recipeRepository, user) => {
     switch(true) {
