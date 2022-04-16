@@ -60,6 +60,18 @@ class Kitchen {
 		});
 	};
 
+  getGroceryNames(ingredientData) {
+		this.groceryList = this.groceryList.map((ingredient) => {
+      let output;
+			ingredientData.forEach((dataPoint) => {
+				if(dataPoint.id === ingredient.id) {
+					output = {id: dataPoint.id, name: dataPoint.name, amount: ingredient.quantity.amount}
+				}
+			});
+			return output;
+		});
+	};
+
 };
 
 

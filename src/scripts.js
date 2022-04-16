@@ -180,13 +180,13 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  let selectRecipeDom = (e, recipeRepository, user) => {
+  let selectRecipeDom = (e, recipeRepository, user, ingredientData) => {
     let recipe = recipeRepository.allRecipes.find((recipe) => {
       return `${recipe.id}` ===  e.target.dataset.id
     });
     let output = user.kitchen.checkPantry(recipe)
     user.kitchen.updateAmountToBuy()
-    console.log(user.kitchen.groceryList)
+    user.kitchen.getGroceryNames(ingredientData)
     checkRecipe.innerHTML = '';
     checkRecipe.innerHTML = output;
     user.kitchen.groceryList.forEach((ingredient) => {
@@ -205,6 +205,7 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
 
   let renderUserIngredients = (user, ingredientData) => {
     let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
+
     itemsToDisplay.forEach((item) => {
       userPantry.innerHTML +=  ` <li>${item.name} : ${item.amount}</li>`
     });
