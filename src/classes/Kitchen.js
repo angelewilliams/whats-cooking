@@ -4,6 +4,8 @@ class Kitchen {
     this.groceryList;
   }
 
+
+
   checkPantry (recipe) {
         this.groceryList = recipe.ingredientsInfo.filter((ingredient) => {
         let output = true;
@@ -45,6 +47,18 @@ class Kitchen {
   // 
 
   }
+
+  getIngredientNames(ingredientData) {
+		return this.pantry.map((ingredient) => {
+      let output;
+			ingredientData.forEach((dataPoint) => {
+				if(dataPoint.id === ingredient.ingredient) {
+					output = {name: dataPoint.name, amount: ingredient.amount}
+				}      
+			});
+			return output;
+		});
+	};
 
 };
 

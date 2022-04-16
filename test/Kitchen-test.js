@@ -59,7 +59,12 @@ describe('Kitchen', () => {
       itemToCheck = kitchen.groceryList[3].quantity.amount;
 
       expect(itemToCheck).to.equal(1);
-
     });
+
+    it('should be able to get a list of names for all the ingredients the user has in their pantry', () => {
+        let output = kitchen.getIngredientNames(ingredientsData)
+        console.log(output)
+        expect(output[2].name).to.equal('wheat flour')
+    })
 
 })
