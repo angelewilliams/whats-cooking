@@ -28,8 +28,8 @@ class User {
   };
 
   addRecipeToCook(recipe) {
+    recipe.wantToCook = true;
     if(!this.recipesToCook.includes(recipe)){
-      recipe.wantToCook = true;
       this.recipesToCook.push(recipe);
     };
   };
@@ -38,7 +38,7 @@ class User {
     recipe.wantToCook = false;
     this.recipesToCook.forEach((recipeToCook, i) => {
       if(recipeToCook === recipe){
-        this.favoriteRecipes.splice(i, 1);
+        this.recipesToCook.splice(i, 1);
       };
     });
   };
