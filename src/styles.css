@@ -351,7 +351,7 @@ transform: scale(1.1);
   height: 100%;
   width: 100%;
   display:flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .recipe-to-cook {
@@ -365,11 +365,7 @@ transform: scale(1.1);
 
 
 
-.hidden {
-  display: none;
-}
-
-.cook-this-recipe {
+.cook-this-recipe, .add-to-pantry {
   background: linear-gradient(-10deg, #09314D, #7D98A1 );
   color: white;
   box-shadow: inset  -2px -2px 3px 2px #09314D,
@@ -388,3 +384,11 @@ transform: scale(1.1);
   inset  2px 2px 3px 2px #ffffff;
 }
 
+
+
+
+
+
+.hidden {
+  display: none;
+}

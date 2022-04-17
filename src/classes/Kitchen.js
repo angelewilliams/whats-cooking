@@ -23,7 +23,7 @@ class Kitchen {
       }
       this.currentRecipe.canCook = false
       console.log( this.currentRecipe.canCook)
-      return 'It looks like you still need to pick up some items--We will put a grocery list together for you.'
+      return `It looks like you need the following ingredients to make ${recipe.name}: `
   }
 
   updateAmountToBuy() {

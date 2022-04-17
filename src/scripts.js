@@ -10,14 +10,14 @@ import RecipeRepository from '../src/classes/RecipeRepository';
 import User from '../src/classes/User';
 
 //~~~~~~~~~~~~~~~~~ API CALLS & CLASS INSTANTIATION ~~~~~~~~~~~~~~~~`
-const instantiateClasses = (recipeData, ingredientData, userData) => {
+const instantiateClasses = (recipeData, ingredientData, userData, postData, getData) => {
   let recipeRepository = new RecipeRepository(recipeData, ingredientData);
     let generateRandomUser = () => {
       return userData[Math.floor(Math.random() * userData.length)];
     };
   let user = new User(generateRandomUser());
   createRecipePreview(recipeRepository.allRecipes, recipeSection);
-  createEventListeners(recipeRepository, user, ingredientData);
+  createEventListeners(recipeRepository, user, ingredientData, postData, getData);
   console.log(user.pantry)
 };
 
@@ -25,7 +25,9 @@ apiCalls.then(data => {
   let userData = data[0];
   let recipeData = data[1];
   let ingredientData = data[2];
-  instantiateClasses(recipeData, ingredientData, userData);
+  let postData = data[3];
+  let getData = data[4];
+  instantiateClasses(recipeData, ingredientData, userData, postData, getData);
 });
 //~~~~~~~~~~~~~~~~~~~~ QUERY SELECTORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const recipeSection = document.getElementById('recipesSection');
@@ -51,13 +53,14 @@ let kitchenPage = document.querySelector('.kitchen');
 let mainPage = document.querySelector('.main-page');
 let userPantry = document.querySelector('.user-pantry');
 let recipesToCook = document.getElementById('recipesToCook');
-let cookRecipe = document.getElementById('cookRecipe');
+// let cookRecipe = document.getElementById('cookRecipe');
+// let addToPantry = document.getElementById('addToPantry');
 let checkRecipe = document.getElementById('checkRecipe');
-
+let recipeAction = document.getElementById('recipeAction');
 
 //~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const createEventListeners = (recipeRepository, user, ingredientData) => {
+const createEventListeners = (recipeRepository, user, ingredientData, postData, getData) => {
 
   kitchenBar.addEventListener('click', (e) => {
     displayKitchen(e, user, ingredientData)
@@ -95,9 +98,13 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
     checkAllRecipesView(e)
   });
 
-  cookRecipe.addEventListener('click', (e) => {
-    cookRecipe(e)
-  });
+  recipeAction.addEventListener('click', (e) => {
+    // console.log(e.target)
+    prepareToCook(e, user, postData, getData, ingredientData)
+  })
+  // cookRecipe.addEventListener('click', (e) => {
+  //   cookThisRecipe(e, user)
+  // });
 
   recipesToCook.addEventListener('click', (e) => {
     selectRecipeDom(e, recipeRepository, user, ingredientData)
@@ -179,19 +186,53 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
 };
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  let prepareToCook = (e, user, postData, getData, ingredientData) => {
+    if(e.target.id === 'addToPantry'){
+
+      let form = {userID: user.id, ingredientID:20081, ingredientModification: 30};
+
+      postData(form);
+
+      getData('users').then(usersData => {
+        let output = usersData.find((person) => person.id === user.id);
+        console.log('output' , output);
+        console.log('user pantry BEFORE' , user.kitchen.pantry);
+        user.kitchen.pantry = output.pantry;
+        console.log('user pantry AFTER ' , user.kitchen.pantry);
+
+      })
+      displayKitchen(e, user, ingredientData)
+      //we need to access user.kitchen.groceryList and create a POST request
+      //then we need to rerender the pantry section, and recipe
+
+    }
+    else if(e.target.id === 'cookRecipe'){
+      console.log('clicked cook recipe')
+    }
+  };
+
 
   let selectRecipeDom = (e, recipeRepository, user, ingredientData) => {
     let recipe = recipeRepository.allRecipes.find((recipe) => {
       return `${recipe.id}` ===  e.target.dataset.id
     });
-    let output = user.kitchen.checkPantry(recipe)
-    user.kitchen.updateAmountToBuy()
-    user.kitchen.getGroceryNames(ingredientData)
+
+    if(recipe !== user.kitchen.currentRecipe){
+      let output = user.kitchen.checkPantry(recipe);
+      user.kitchen.updateAmountToBuy();
+      user.kitchen.getGroceryNames(ingredientData);
+      renderRecipeToCook(user, output);
+    }
+  }
+
+  let renderRecipeToCook = (user, output) => {
     checkRecipe.innerHTML = '';
     checkRecipe.innerHTML = output;
     user.kitchen.groceryList.forEach((ingredient) => {
-      checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p><br>`
+      checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p>`
     })
+    recipeAction.innerHTML = '';
+    recipeAction.innerHTML += `<button class="add-to-pantry" id="addToPantry">Add these ingredients to my pantry!</button> <button class="cook-this-recipe" id="cookRecipe">Cook!</button>` ;
   }
 
   let displayKitchen = (e, user, ingredientData) => {
@@ -204,17 +245,16 @@ const createEventListeners = (recipeRepository, user, ingredientData) => {
   }
 
   let renderUserIngredients = (user, ingredientData) => {
+    userPantry.innerHTML = '';
     let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
-
     itemsToDisplay.forEach((item) => {
       userPantry.innerHTML +=  ` <li>${item.name} : ${item.amount}</li>`
     });
-    // console.log(itemsToDisplay);
   }
 
-  // let cookRecipe = (e) => {
-  //   //this is if a user is able to cook a given recipe and will remove the ingredients 'used' in post request
-  // }
+  let cookThisRecipe = (e, user) => {
+    // console.log(user.kitchen.pantry)
+  }
 
   let resetPageRender = (recipeRepository, user) => {
     switch(true) {
