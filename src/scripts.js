@@ -187,20 +187,33 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   let prepareToCook = (e, user, postData, getData, ingredientData) => {
+    console.log('line 190: ', user.kitchen.pantry)
     if(e.target.id === 'addToPantry'){
       postIngredientData(user, postData)
-      user.kitchen.addToPantry()
-      renderUserIngredients(user, ingredientData)
     }
     else if(e.target.id === 'cookRecipe'){
       console.log('clicked cook recipe')
     }
+    setTimeout(() => {
+      test(e, user, getData, ingredientData)
+    }, 1000)
     
+    renderUserIngredients(user, ingredientData)
   };
+
+  let test = (e, user, getData, ingredientData) => {
+    getData('users').then(usersData => {
+
+      // user.kitchen.pantry = usersData.find(person => person.id === user.id).pantry
+      let output = usersData.find((person) => person.id === user.id);
+      user.kitchen.pantry = output.pantry;
+    })
+
+  }
 
   let postIngredientData = (user, postData) => {
     let form = {userID: user.id, ingredientID:20081, ingredientModification: 30};
-    postData(form)
+    postData(form);
   }
 
   let selectRecipeDom = (e, recipeRepository, user, ingredientData) => {
@@ -211,15 +224,15 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
     if(recipe !== user.kitchen.currentRecipe){
       let output = user.kitchen.checkPantry(recipe);
       user.kitchen.updateAmountToBuy();
-      let output2 = user.kitchen.getGroceryNames(ingredientData);
-      renderRecipeToCook(output, output2);
+      user.kitchen.getGroceryNames(ingredientData);
+      renderRecipeToCook(user, output);
     }
   }
 
-  let renderRecipeToCook = (output, output2) => {
+  let renderRecipeToCook = (user, output) => {
     checkRecipe.innerHTML = '';
     checkRecipe.innerHTML = output;
-    output2.forEach((ingredient) => {
+    user.kitchen.groceryList.forEach((ingredient) => {
       checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p>`
     })
     recipeAction.innerHTML = '';
@@ -236,10 +249,11 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
   }
 
   let renderUserIngredients = (user, ingredientData) => {
+    console.log('test')
     userPantry.innerHTML = '';
     let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
     itemsToDisplay.forEach((item) => {
-      userPantry.innerHTML += `<li>${item.name} : ${item.amount}</li>`
+      userPantry.innerHTML +=  ` <li>${item.name} : ${item.amount}</li>`
     });
   }
 
