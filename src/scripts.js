@@ -187,16 +187,15 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   let prepareToCook = (e, user, postData, getData, ingredientData) => {
-    console.log('line 190: ', user.kitchen.pantry)
     if(e.target.id === 'addToPantry'){
       postIngredientData(user, postData)
-      // user.kitchen.pantry = 
+      user.kitchen.addToPantry()
+      renderUserIngredients(user, ingredientData)
     }
     else if(e.target.id === 'cookRecipe'){
       console.log('clicked cook recipe')
     }
     
-    renderUserIngredients(user, ingredientData)
   };
 
   let postIngredientData = (user, postData) => {
@@ -212,15 +211,15 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
     if(recipe !== user.kitchen.currentRecipe){
       let output = user.kitchen.checkPantry(recipe);
       user.kitchen.updateAmountToBuy();
-      user.kitchen.getGroceryNames(ingredientData);
-      renderRecipeToCook(user, output);
+      let output2 = user.kitchen.getGroceryNames(ingredientData);
+      renderRecipeToCook(output, output2);
     }
   }
 
-  let renderRecipeToCook = (user, output) => {
+  let renderRecipeToCook = (output, output2) => {
     checkRecipe.innerHTML = '';
     checkRecipe.innerHTML = output;
-    user.kitchen.groceryList.forEach((ingredient) => {
+    output2.forEach((ingredient) => {
       checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p>`
     })
     recipeAction.innerHTML = '';
@@ -237,11 +236,10 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
   }
 
   let renderUserIngredients = (user, ingredientData) => {
-    console.log('test')
     userPantry.innerHTML = '';
     let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
     itemsToDisplay.forEach((item) => {
-      userPantry.innerHTML +=  ` <li>${item.name} : ${item.amount}</li>`
+      userPantry.innerHTML += `<li>${item.name} : ${item.amount}</li>`
     });
   }
 

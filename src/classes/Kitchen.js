@@ -45,35 +45,23 @@ class Kitchen {
       return item.id
     })
 
-
     groceryListIds.forEach((ingredientId) => {
-      if(!pantryIds.includes(ingredientId)) {
+      if(pantryIds.includes(ingredientId)) {
+        let output = this.groceryList.find((ingredient) => ingredient.id === ingredientId)
+        this.pantry.forEach((item) => {
+          if(item.ingredient === ingredientId) {
+            item.amount += output.quantity.amount
+          }
+        })
+      } else {
         this.groceryList.forEach((ingredient) => {
           if(ingredient.id === ingredientId) {
             this.pantry.push({ingredient: ingredient.id, amount: ingredient.quantity.amount})
-            }
+          }
         })
-      } else {
-        this.pantry.forEach((item) => {
-          let output = this.groceryList.find(ingredient => {
-            return ingredient.id === ingredientId
-        }) 
-        item.amount += output.quantity.amount
+      }
     })
   }
-  })
-}
-    // this.pantry.forEach((item) => {
-    //   this.groceryList.forEach((ingredient) => {
-    //     if(item.ingredient === ingredient.id) {
-    //       item.amount += ingredient.quantity.amount
-    //     } else
-
-    //   })
-    // })
-  // As a user, I should be able to add more ingredients to my pantry
-  // from form input most likely also needs to translate into a POST to get added/update to the user API
-  //We will want to return an object that we can use as the formData to use in our POST request
 
   cookRecipe(){
   //As a user, when I cook a meal, those ingredients should be removed from my pantry
@@ -96,7 +84,7 @@ class Kitchen {
 	};
 
   getGroceryNames(ingredientData) {
-		this.groceryList = this.groceryList.map((ingredient) => {
+		return this.groceryList.map((ingredient) => {
       let output;
 			ingredientData.forEach((dataPoint) => {
 				if(dataPoint.id === ingredient.id) {

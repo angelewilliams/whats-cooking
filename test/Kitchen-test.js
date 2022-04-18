@@ -71,8 +71,8 @@ describe.only('Kitchen', () => {
         kitchen.checkPantry(recipe);
         kitchen.updateAmountToBuy();
         kitchen.addToPantry();
-        console.log(kitchen.pantry)
         expect(kitchen.pantry[2].amount).to.equal(10)
+        expect(kitchen.pantry.length).to.equal(15)
     })
 
 })
