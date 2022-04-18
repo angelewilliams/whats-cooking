@@ -13,8 +13,11 @@ const postData = (formData) => {
     body: JSON.stringify(formData)
   })
   .then(response => {
-    if (!response.ok) throw new Error('Please fill out all fields./ OR that is not an available ingredient');
-    return response.json()
+    if (!response.ok) { 
+      throw new Error('Unable to add to pantry')
+    } else { 
+      return response.json()
+    }
   })
   .catch(error => console.log(error))
 }

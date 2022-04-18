@@ -128,7 +128,7 @@ const ingredientsData = [
           {
             "id": 20081,
             "quantity": {
-              "amount": 1.5,
+              "amount": 10,
               "unit": "c"
             }
           },

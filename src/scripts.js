@@ -189,33 +189,19 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
   let prepareToCook = (e, user, postData, getData, ingredientData) => {
     console.log('line 190: ', user.kitchen.pantry)
     if(e.target.id === 'addToPantry'){
-
-
       postIngredientData(user, postData)
-
-
-      // displayKitchen(e, user, ingredientData)
+      // user.kitchen.pantry = 
     }
     else if(e.target.id === 'cookRecipe'){
       console.log('clicked cook recipe')
     }
-    test(e, user, getData, ingredientData) 
-    console.log(user.kitchen.pantry)
+    
+    renderUserIngredients(user, ingredientData)
   };
-
-  let test = (e, user, getData, ingredientData) => {
-    getData('users').then(usersData => {
-
-      // user.kitchen.pantry = usersData.find(person => person.id === user.id).pantry
-      let output = usersData.find((person) => person.id === user.id);
-      user.kitchen.pantry = output.pantry;
-      displayKitchen(e, user, ingredientData)
-    })
-  }
 
   let postIngredientData = (user, postData) => {
     let form = {userID: user.id, ingredientID:20081, ingredientModification: 30};
-    postData(form);
+    postData(form)
   }
 
   let selectRecipeDom = (e, recipeRepository, user, ingredientData) => {
@@ -251,6 +237,7 @@ const createEventListeners = (recipeRepository, user, ingredientData, postData, 
   }
 
   let renderUserIngredients = (user, ingredientData) => {
+    console.log('test')
     userPantry.innerHTML = '';
     let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
     itemsToDisplay.forEach((item) => {
