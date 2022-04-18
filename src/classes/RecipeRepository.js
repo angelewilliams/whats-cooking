@@ -33,7 +33,7 @@ class RecipeRepository {
     return this.allRecipes.filter((recipe) => {
     let output = true
      inputName.toLowerCase().split(' ').forEach((input) => {
-        if(!recipe.name.toLowerCase().split(' ').includes(input)) {
+        if(!recipe.name.toLowerCase().includes(input)) {
           output = false
         }
       })

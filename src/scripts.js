@@ -10,14 +10,14 @@ import RecipeRepository from '../src/classes/RecipeRepository';
 import User from '../src/classes/User';
 
 //~~~~~~~~~~~~~~~~~ API CALLS & CLASS INSTANTIATION ~~~~~~~~~~~~~~~~`
-const instantiateClasses = (recipeData, ingredientData, userData) => {
+const instantiateClasses = (recipeData, ingredientData, userData, postData, getData) => {
   let recipeRepository = new RecipeRepository(recipeData, ingredientData);
     let generateRandomUser = () => {
       return userData[Math.floor(Math.random() * userData.length)];
     };
   let user = new User(generateRandomUser());
-  createRecipePreview(recipeRepository.allRecipes);
-  createEventListeners(recipeRepository, user);
+  createRecipePreview(recipeRepository.allRecipes, recipeSection);
+  createEventListeners(recipeRepository, user, ingredientData, postData, getData);
   console.log(user.pantry)
 };
 
@@ -25,7 +25,9 @@ apiCalls.then(data => {
   let userData = data[0];
   let recipeData = data[1];
   let ingredientData = data[2];
-  instantiateClasses(recipeData, ingredientData, userData);
+  let postData = data[3];
+  let getData = data[4];
+  instantiateClasses(recipeData, ingredientData, userData, postData, getData);
 });
 //~~~~~~~~~~~~~~~~~~~~ QUERY SELECTORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const recipeSection = document.getElementById('recipesSection');
@@ -45,9 +47,25 @@ let popupIngredients = document.getElementById('popupIngredients');
 let popupToCookIcon = document.getElementById('popupAddCook');
 let popupSaveIcon = document.getElementById('popupAddSaved');
 
+
+let kitchenBar = document.getElementById('userKitchen');
+let kitchenPage = document.querySelector('.kitchen');
+let mainPage = document.querySelector('.main-page');
+let userPantry = document.querySelector('.user-pantry');
+let recipesToCook = document.getElementById('recipesToCook');
+// let cookRecipe = document.getElementById('cookRecipe');
+// let addToPantry = document.getElementById('addToPantry');
+let checkRecipe = document.getElementById('checkRecipe');
+let recipeAction = document.getElementById('recipeAction');
+
 //~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const createEventListeners = (recipeRepository, user) => {
+const createEventListeners = (recipeRepository, user, ingredientData, postData, getData) => {
+
+  kitchenBar.addEventListener('click', (e) => {
+    displayKitchen(user, ingredientData)
+  });
+
   popUp.addEventListener('click', (e) => {
     hidePopup(e);
   });
@@ -80,13 +98,25 @@ const createEventListeners = (recipeRepository, user) => {
     checkAllRecipesView(e)
   });
 
+  recipeAction.addEventListener('click', (e) => {
+    // console.log(e.target)
+    prepareToCook(e, user, postData, getData, ingredientData)
+  })
+  // cookRecipe.addEventListener('click', (e) => {
+  //   cookThisRecipe(e, user)
+  // });
+
+  recipesToCook.addEventListener('click', (e) => {
+    selectRecipeDom(e, recipeRepository, user, ingredientData)
+  })
+
   const hidePopup = (e) => {
     togglePopUp(e);
     form.reset()
     if(user.viewingSavedRecipe) {
-      createRecipePreview(user.favoriteRecipes, e);
+      createRecipePreview(user.favoriteRecipes, recipeSection);
     } else {
-        createRecipePreview(recipeRepository.allRecipes, e);
+        createRecipePreview(recipeRepository.allRecipes, recipeSection);
     };
   };
 
@@ -121,19 +151,25 @@ const createEventListeners = (recipeRepository, user) => {
 
   const checkSavedRecipesView = (e) => {
     if(!user.viewingSavedRecipe) {
+      user.viewingKitchen = false;
       toggleHidden(savedRecipesBar);
       toggleHidden(allRecipesBar);
-      createRecipePreview(user.favoriteRecipes, e);
+      kitchenPage.classList.add('hidden');
+      mainPage.classList.remove('hidden');
+      createRecipePreview(user.favoriteRecipes, recipeSection);
       form.reset()
     }
     user.viewingSavedRecipe = true;
   }
 
   const checkAllRecipesView = (e) => {
-    if(user.viewingSavedRecipe) {
+    if(user.viewingSavedRecipe || user.viewingKitchen) {
+      user.viewingKitchen = false;
       user.viewingSavedRecipe = false;
       toggleHidden(allRecipesBar);
       toggleHidden(savedRecipesBar);
+      kitchenPage.classList.add('hidden');
+      mainPage.classList.remove('hidden');
       resetPageRender(recipeRepository, user);
       form.reset()
     };
@@ -150,16 +186,137 @@ const createEventListeners = (recipeRepository, user) => {
 };
 
   //~~~~~~~~~~~~~~~~~~~~ EVENT HANDLERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  let prepareToCook = (e, user, postData, getData, ingredientData) => {
+    if(e.target.id === 'addToPantry'){
+      postIngredientData(user, postData, getData, ingredientData);
+    }
+    else if(e.target.id === 'cookRecipe'){
+      removeIngredientData(user, postData, getData, ingredientData);
+    }
+
+  };
+
+  let removeIngredientData = (user, postData, getData, ingredientData) => {
+    let stuffToRemove = user.kitchen.currentRecipe.ingredientsInfo;
+
+    let postList = stuffToRemove.map((recipeIngredient) => {
+      return {userID: user.id, ingredientID:recipeIngredient.id, ingredientModification: (recipeIngredient.quantity.amount * -1)};
+    });
+
+    postList.forEach((form, i) => {
+      postData(form)
+      .then(() => {
+        getData('users')
+          .then(users => {
+            users.forEach((person) => {
+              if(person.id === user.id){
+                user.kitchen.pantry = person.pantry;
+              }
+            })
+          })
+          .then(() => {
+            let recipe = user.kitchen.currentRecipe;
+            user.removeRecipeFromCookList(recipe);
+            displayKitchen(user, ingredientData)
+            checkRecipe.innerHTML = '';
+            checkRecipe.innerHTML += `Please Select A Recipe`;
+            recipeAction.innerHTML = '';
+            if((postList.length) === i){
+              user.kitchen.currentRecipe = '';
+            }
+          })
+        })
+    })
+  }
+
+  let postIngredientData = (user, postData, getData, ingredientData) => {
+    let newList = user.kitchen.groceryList.map((groceryItem) => {
+      return {userID: user.id, ingredientID:groceryItem.id, ingredientModification: groceryItem.amount}
+    })
+
+    newList.forEach((form) => {
+      postData(form)
+      .then(() => {
+        getData('users')
+          .then(users => {
+            users.forEach((person) => {
+              if(person.id === user.id){
+                user.kitchen.pantry = person.pantry;
+              }
+              })
+            })
+          .then(() => {
+            user.kitchen.groceryList = [];
+            renderUserIngredients(user, ingredientData);
+            let recipe = user.kitchen.currentRecipe;
+            let output = user.kitchen.checkPantry(recipe);
+            renderRecipeToCook(user, output, {id:'cookRecipe', innerText:'Cook this Recipe!'});
+        });
+      });
+    })
+  }
+
+  let selectRecipeDom = (e, recipeRepository, user, ingredientData) => {
+    let recipe = recipeRepository.allRecipes.find((recipe) => {
+      return `${recipe.id}` ===  e.target.dataset.id
+    });
+
+    if(recipe !== user.kitchen.currentRecipe){
+      let output = user.kitchen.checkPantry(recipe);
+      user.kitchen.updateAmountToBuy();
+      user.kitchen.getGroceryNames(ingredientData);
+      if(!user.kitchen.currentRecipe.canCook){
+        renderRecipeToCook(user, output, {id:'addToPantry', innerText:'Add ingredients to my pantry!'})
+      }
+      else if (user.kitchen.currentRecipe.canCook){
+          renderRecipeToCook(user, output, {id:'cookRecipe', innerText:'Cook this recipe!'})
+      }
+      ;
+    }
+  }
+
+  let renderRecipeToCook = (user, output, button) => {
+    checkRecipe.innerHTML = '';
+    checkRecipe.innerHTML = output;
+    user.kitchen.groceryList.forEach((ingredient) => {
+      checkRecipe.innerHTML += `<p>${ingredient.name}: ${ingredient.amount}</p>`
+    })
+    recipeAction.innerHTML = '';
+    recipeAction.innerHTML += `<button class="recipe-action" id="${button.id}">${button.innerText}</button>` ;
+  }
+
+// <button class="cook-this-recipe" id="cookRecipe">Cook!</button>
+//maybe remove the e
+  let displayKitchen = (user, ingredientData) => {
+    renderUserIngredients(user, ingredientData);
+    user.viewingKitchen = true;
+    user.viewingSavedRecipe = false;
+    kitchenPage.classList.remove('hidden');
+    mainPage.classList.add('hidden');
+    createRecipePreview(user.recipesToCook, recipesToCook)
+  }
+
+  let renderUserIngredients = (user, ingredientData) => {
+    userPantry.innerHTML = '';
+    let itemsToDisplay = user.kitchen.getIngredientNames(ingredientData);
+    itemsToDisplay.forEach((item) => {
+      userPantry.innerHTML +=  ` <li>${item.name} : ${item.amount}</li>`
+    });
+  }
+
+  let cookThisRecipe = (e, user) => {
+    // console.log(user.kitchen.pantry)
+  }
 
   let resetPageRender = (recipeRepository, user) => {
     switch(true) {
       case user.viewingSavedRecipe:
-      createRecipePreview(user.favoriteRecipes);
+      createRecipePreview(user.favoriteRecipes, recipeSection);
       break
       // case user.viewingKitchen:
       // createRecipePreview(user.favoriteRecipes);
       default:
-      createRecipePreview(recipeRepository.allRecipes);
+      createRecipePreview(recipeRepository.allRecipes, recipeSection);
     }
   };
 
@@ -174,25 +331,6 @@ const createEventListeners = (recipeRepository, user) => {
       user.addRecipeToCook(recipe);
       toggleToCookIcon(e, recipe);
     }
-
-    // if(recipe.wantToCook && user.viewingSavedRecipe) {
-    //   user.removeRecipeFromCookList(recipe);
-    //   toggleToCookIcon(e, recipe);
-    //   // createRecipePreview(user.viewingSavedRecipe)
-    //
-    // } else if(recipe.wantToCook && !user.viewingSavedRecipe) {
-    //   user.removeRecipeFromCookList(recipe);
-    //   toggleToCookIcon(e, recipe);
-    //
-    // } else if(!recipe.wantToCook && !user.viewingSavedRecipe) {
-    //   user.addRecipeToCook(recipe);
-    //   toggleToCookIcon(e, recipe);
-    //
-    // } else if(!recipe.wantToCook && user.viewingSavedRecipe) {
-    //   user.addRecipeToCook(recipe);
-    //   toggleToCookIcon(e, recipe);
-    // };
-
   };
 
   let identifyRecipe = (e, recipeRepository, user) => {
@@ -202,7 +340,7 @@ const createEventListeners = (recipeRepository, user) => {
     if(recipe.saved && user.viewingSavedRecipe) {
       user.removeFavoriteRecipe(recipe);
       toggleSaveIcon(e, recipe);
-      createRecipePreview(user.favoriteRecipes)
+      createRecipePreview(user.favoriteRecipes, recipeSection)
     } else if(recipe.saved && !user.viewingSavedRecipe) {
       user.removeFavoriteRecipe(recipe);
       toggleSaveIcon(e, recipe);
@@ -248,13 +386,13 @@ const createEventListeners = (recipeRepository, user) => {
       toggleHidden(popUp);
     };
   };
-
-var createRecipePreview = (recipes) => {
-  recipeSection.innerHTML = '';
+//need to change all createRecipePreview with (recipes, recipeSection)
+var createRecipePreview = (recipes, element) => {
+  element.innerHTML = '';
   recipes.forEach((recipe) => {
     let srcCook = findCookIcon(recipe);
     let srcSave = findSaveIcon(recipe);
-    recipeSection.innerHTML += `
+    element.innerHTML += `
       <section class="recipe-preview" data-id="${recipe.id}">
         <section class="recipe-heading" data-id="${recipe.id}">
           <h3 data-id="${recipe.id}">${recipe.name}</h3>
@@ -294,21 +432,21 @@ let findSaveIcon = (recipe) => {
 const displayFilteredTags = (tagToFilter, user, recipeRepository) => {
   if(user.viewingSavedRecipe) {
     let userFilteredSavedRecipes = user.filterFavsByTag(tagToFilter);
-    createRecipePreview(userFilteredSavedRecipes);
+    createRecipePreview(userFilteredSavedRecipes, recipeSection);
     return;
   };
   const tempRecipeArr = recipeRepository.filterByTag(tagToFilter);
-  createRecipePreview(tempRecipeArr);
+  createRecipePreview(tempRecipeArr, recipeSection);
 };
 
 const displayRecipesByName = (inputName, recipeRepository, user) => {
   if(user.viewingSavedRecipe) {
     const filterSavedRecipesByName = user.filterFavsByName(inputName);
-    createRecipePreview(filterSavedRecipesByName);
+    createRecipePreview(filterSavedRecipesByName, recipeSection);
     return;
   };
   const tempRecipesArray = recipeRepository.filterByName(inputName);
-  createRecipePreview(tempRecipesArray);
+  createRecipePreview(tempRecipesArray, recipeSection);
 };
 
 const displayPopUp = (recipe) => {

@@ -7,7 +7,7 @@ import Recipe from '../src/classes/Recipe';
 const { usersData } = require('../src/data/sampleDatasets');
 import Kitchen from '../src/classes/Kitchen';
 
-describe('Kitchen', () => {
+describe.only('Kitchen', () => {
     let kitchen, user, recipe;
 
     beforeEach(() => {
@@ -31,6 +31,7 @@ describe('Kitchen', () => {
 
     it('should be able to check if pantry has the ingredients to make recipe', () => {
         const recipeResult = [
+            { id: 20081, quantity: {amount: 10, unit: "c"}},
             { id: 18372, quantity: { amount: 0.5, unit: 'tsp' } },
             { id: 1123, quantity: { amount: 1, unit: 'large' } },
             { id: 19335, quantity: { amount: 0.5, unit: 'c' } },
@@ -46,20 +47,32 @@ describe('Kitchen', () => {
         let pantryCheck = kitchen.checkPantry(recipe)
 
         expect(kitchen.groceryList).to.deep.equal(recipeResult)
-        expect(pantryCheck).to.equal('It looks like you still need to pick up some items--We will put a grocery list together for you.')
+        expect(pantryCheck).to.equal('It looks like you need the following ingredients to make Loaded Chocolate Chip Pudding Cookie Cups: ')
     });
 
     it('should be able to determine the amounts of missing ingredients still needed to cook a recipe', () => {
       kitchen.checkPantry(recipe);
-      let itemToCheck = kitchen.groceryList[3].quantity.amount;
+      let itemToCheck = kitchen.groceryList[4].quantity.amount;
 
       expect(itemToCheck).to.equal(3);
 
-      kitchen.updateAmountToBuy();
-      itemToCheck = kitchen.groceryList[3].quantity.amount;
+    //   kitchen.updateAmountToBuy();
+    //   itemToCheck = kitchen.groceryList[4].quantity.amount;
 
-      expect(itemToCheck).to.equal(1);
-
+    //   expect(itemToCheck).to.equal(1);
     });
+
+    it('should be able to get a list of names for all the ingredients the user has in their pantry', () => {
+        let output = kitchen.getIngredientNames(ingredientsData)
+        expect(output[2].name).to.equal('wheat flour')
+    })
+
+    it('should be able to add ingredients to the pantry', () => {
+        kitchen.checkPantry(recipe);
+        kitchen.updateAmountToBuy();
+        kitchen.addToPantry();
+        expect(kitchen.pantry[2].amount).to.equal(10)
+        expect(kitchen.pantry.length).to.equal(15)
+    })
 
 })

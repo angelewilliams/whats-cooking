@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya" rel="stylesheet">
-    <title>Whats Cookin</title>
+    <title>Whats Cooking</title>
   </head>
   <body>
     <header>
@@ -21,7 +21,7 @@
             <div class= "underline-box-saved underline-box hidden"></div>
           </button>
           <button class="nav-bar-item" id="userKitchen">
-            <h2>Neil's Kitchen</h2>
+            <h2>My Kitchen</h2>
             <div class= "underline-box-saved underline-box hidden"></div>
           </button>
         </div>
@@ -31,24 +31,22 @@
       <section class="kitchen hidden">
         <section class="kitchen-pantry">
           <div>
-            <h3 class='sidebar-header'>Neil's Pantry</h3>
+            <h3 class='sidebar-header'>My Pantry</h3>
           </div>
           <div class="user-pantry-wrapper">
             <ul class="user-pantry">
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
-              <li>12 Pumpkins</li><br>
             </ul>
           </div>
         </section>
         <section class="cook-recipe">
-          <div class="recipe-to-cook"></div>
-          <div></div>
+          <article class="recipe-to-cook" id="checkRecipe">Please Select A Recipe</article>
+          <div class="recipe-action" id="recipeAction">
+          </div>
+          <!-- <button class="cook-this-recipe" id="cookRecipe">Cook!</button>
+          <button class="add-to-pantry hidden" id="addToPantry">Add these ingredients to my pantry!</button> -->
+
         </section>
-        <section class="pantry-add-ingredients">
+        <!-- <section class="pantry-add-ingredients">
           <div>
             <h3 class="sidebar-header">Procure Ingredients</h3>
           </div>
@@ -64,27 +62,29 @@
                   <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
                   <li>potatos<button>+</button><span>15</span><button>-</button></li><br>
                 </ul>
-              </div> 
+              </div>
             </div>
             <button class="button-buy-ingredients">Buy Ingredients</button>
           </div>
+        </section> -->
+        <section class="recipes-to-cook" id="recipesToCook">Recipes to Cook</section>
+      </section>
+      <div class="main-page">
+        <section class="filter-section ">
+          <h3 class="sidebar-header">Filters</h3>
+          <form id="filterForm">
+            <h4>Meal Type</h4>
+            <button id="clear" type='reset' class="reset-filters-button" name="meal-type">
+              Reset Filters
+            </button><br>
+          </form>
         </section>
-        <section class="recipes-to-cook">Recipes to Cook</section>
-      </section>
-      <section class="filter-section">
-        <h3 class="sidebar-header">Filters</h3>
-        <form id="filterForm">
-          <h4>Meal Type</h4>
-          <button id="clear" type='reset' class="reset-filters-button" name="meal-type">
-            Reset Filters
-          </button><br>
-        </form>
-      </section>
-      <section class="recipes-wrapper">
-        <input type="search" placeholder="Search by name.." id="searchBar">
-        <section class="recipes-section" id="recipesSection">
+        <section class="recipes-wrapper">
+          <input type="search" placeholder="Search by name.." id="searchBar">
+          <section class="recipes-section" id="recipesSection">
+          </section>
         </section>
-      </section>
+      </div>
     </main>
     <div class="popup-shadow hidden" id="shadow">
     </div>
@@ -104,7 +104,7 @@
           <div class="popup-ingredient">
             <h3>Ingredients</h3>
             <div id="popupIngredients"></div>
-          </div>        
+          </div>
           <div class="popup-instructions">
             <h3>Instructions</h3>
             <div id="popupInstructions"></div>

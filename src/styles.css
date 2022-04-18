@@ -47,7 +47,7 @@ p {
   margin: 0;
 }
 
-main {
+main, .main-page {
   height: 90vh;
   width: 100%;
   margin-top: 10px;
@@ -303,7 +303,7 @@ transform: scale(1.1);
 .kitchen-pantry {
   height: 100%;
   width: 100%;
-  grid-row: span 2;
+  grid-row: span 3;
   padding: 0;
 }
 
@@ -336,19 +336,54 @@ transform: scale(1.1);
   width: 100%;
   grid-column-start: 2;
   grid-row: 2 / 5;
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+
 }
 
 
 /* COOK RECIPES */
 
-/* .recipe-to-cook {
-  
-} */
-
 .cook-recipe {
   height: 100%;
   width: 100%;
+  display:flex;
+  flex-direction: column;
 }
+
+.recipe-to-cook {
+  height: 100%;
+  width: 80%;
+  overflow-y: scroll
+}
+
+
+
+
+
+
+.cook-this-recipe, .add-to-pantry {
+  background: linear-gradient(-10deg, #09314D, #7D98A1 );
+  color: white;
+  box-shadow: inset  -2px -2px 3px 2px #09314D,
+  inset  2px 2px 3px 2px #ffffff,
+  5px 5px 10px,
+  0px 0px 10px 5px;
+  height: 25px;
+  width: 200px;
+}
+
+.cook-this-recipe:disabled {
+  cursor:auto;
+  background: #8A8A8A;
+  color: #ff0000;
+  box-shadow: inset -2px -2px 3px 2px #3F3F3F,
+  inset  2px 2px 3px 2px #ffffff;
+}
+
 
 
 
