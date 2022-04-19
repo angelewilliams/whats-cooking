@@ -1,4 +1,4 @@
-
+Saved Recipe
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -27,15 +27,19 @@
 
 ### About The Project
 
-![What's Cookin?!](https://user-images.githubusercontent.com/43621994/161454532-c8cd921c-c249-4021-8e18-b9d73df796e6.png)
+![What's Cooking?!](https://user-images.githubusercontent.com/43621994/161454532-c8cd921c-c249-4021-8e18-b9d73df796e6.png)
 
 What's Cooking? It's a question we all have had at some point or another, and its a question we were tasked to solve
-by Turing School of Software and Design. We were given a week to build a fully functional app using a starter repo,
+by Turing School of Software and Design. We were given two weeks to build a fully functional app using a starter repo,
 combining HTML, Css, and Javascript to create a well built user experience.
 
-With this application you are able to view a list of curated recipes and save them for future use. Users
-will also be able to add these recipes to a Cooking list, Which in further versions of the application
-they can use to do meal planning for their forseeable future.
+With this application users are able to view a list of recipes fetched from an API. They can save them for future use, or check them against a virtual pantry and have it dynamically update when they 'cook the recipe'.
+
+The key learning goals of this project were to:
+- Work with a local server and make network requests to API endpoints to retrieve and manipulate data.
+- Write DRY and SRP code to avoid repetitive logic.
+- Follow best practices for accessibility.
+- Implement feedback to improve product and process between two, one week sections.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -70,7 +74,7 @@ We were tasked with utilizing data from an API as well as using Webpack for the 
 2. `cd ` into `whats-cooking`
 3. Then, run NPM install from your command line: `npm install `
     - Do not run `npm audit fix --force`
-4. After you have run npm install inside of your copy of this repo, run:
+4. After you run npm install inside of your copy of this repo, run:
 `npm start`
 This will run the webpack in the terminal so you can view and use the application in your browser. Your terminal will likely display a large block of text as seen below:
 ![Local Host Link](https://user-images.githubusercontent.com/43621994/161456081-7910945b-f2df-4167-a487-3d40cf2498fe.png)
@@ -81,44 +85,27 @@ This will run the webpack in the terminal so you can view and use the applicatio
 
 ### Using the Application
 
-Now that we are all set up for the application, its time for its actual use! When you load into the page, You are met with a webpage with
-a couple basic features. The first is a nav bar, which will allow you to move between two pages, a saved recipes section and a section
-that displays all available recipes. In both of these pages you are able to filter by a couple different tags using the filters section.
-Finally, we have the main event, the recipes section. this  section displays a brief overvew of each recipe, giving you a name, an image, and the
-ability to save and add them to a meal planning list through two buttons.  
+Now that we are all set up for the application, its time for its actual use! When you load the page, You are met with a webpage with a couple basic features. The first is a nav bar, which will allow you to move between three pages: All Recipes, a Saved Recipes section and the "My Kitchen" view where users can see their recipes to cook and their pantry. In both of these pages you are able to filter by a couple different tags using the filters section.
+The All Recipes section displays a preview of each recipe with a name, an image, and the ability to save the recipe and or add it to your 'to cook' list, that can be referenced in the Kitchen.  
 
 ![Main Page Application](https://user-images.githubusercontent.com/43621994/161454532-c8cd921c-c249-4021-8e18-b9d73df796e6.png)
 
-If you click on one of the recipe previews, you will be met with a popup that shows the details of the recipe. This includes a name,
-image and the save and cook buttons, just as in the recipe preview, but now with the addition of instructions and ingredients. at the
- bottom of the ingredients tab, you will even find a total (and reasonable)cost of the recipe so you can plan out the cost of your meals.
+If you click on a recipe preview, you will see a popup that shows the details of the recipe. This includes a name, image and the save and cook buttons, and the recipe content. At the end of the ingredients list, you will see a total (and reasonable, we're sure) cost of the recipe so you can plan out the cost of your meals.
 
 ![Popup Preview](https://user-images.githubusercontent.com/43621994/161584095-e1fb7d26-6f17-4430-bf75-3039e22b06f0.png)
 
-Lastly we have the filter bar, the search bar, and the saved section, all areas of the page that allow you to curate your list of recipes.
-When a filter is clicked, the page displays a list of only the recipes with the tag included in the filter.
+When viewing all recipes or Saved Recipes, you can select a filter or use the search bar to view a curated subset of the recipes that match your criteria.
+When a filter is clicked, the page displays a list of only the recipes with the tag included in the filter or content of the search bar. You can clear your selection with the reset.
 
 ![Filtered Preview](https://user-images.githubusercontent.com/43621994/161585934-b860c6b2-01f6-4330-97bf-6873f02ea448.png)
 
-In the search bar. You can filter out  recipes by their name (currently, this is limited to be case sensitive and you have to search with the first letter capitalized).
-
-Finally, the saved recipes section! This section is where your recipe is sent when you click the banner on a recipe, allowing you to save the recipe for later use.
-This feature is the meat of what you can do with this program.
-
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-When we use this application, we have a couple tools to utilize. we have the ability to filter based on tastes and needs. This application has all of the information
-someone would hopefully need to successfully meal plan for their week, and adds the ability to create a saved list so that they can compile all of the information
-in a customized list. this application will also have the ability to add to a cooked list, and that is logged into our road map.
 
 ![Saved Section Preview](https://user-images.githubusercontent.com/43621994/161586318-0c4e0823-679c-48e6-a0fd-2416babc66c4.png)
 
+Once you've added recipes to cook, you can go to your Kitchen view and see your virtual pantry to check if you have enough ingredients to cook the selected recipe. If you do not have enough of an ingredient to cook the recipe you will be shown a grocery list and be able to add those ingredients to your pantry, right from your Kitchen
+
+![My Kitchen Preview](please add picture of kitchen here)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -132,9 +119,15 @@ in a customized list. this application will also have the ability to add to a co
 - [x] Add ability to save
 - [x] Connect data model to api
 - [x] Add ability to search regardless of capitalization
-- [ ] Add ability to make a curated to cook list
-- [ ] Add ability to search through user pantry to determine what they need to buy.
+- [x] Add ability to make a curated to cook list
+- [x] Add ability to view whether user has enough in their pantry to cook the given recipe.
+- [x] Add ability to add ingredients to pantry and update API
+- [x] Add ability to cook a recipe and reduce pantry amounts in user API based amounts 'used'
 
+_Possible Future Improvements_
+- [ ] Add more accessibility
+- [ ] Refactor DOM updates to separate modular file
+- [ ] Add cook through instructions
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
