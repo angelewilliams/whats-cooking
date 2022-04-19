@@ -1,6 +1,5 @@
 * {
   font-family: 'Alegreya', serif;
-  border: 1px solid red ;
   margin: 0;
 }
 
@@ -28,12 +27,12 @@ header {
 }
 
 h1 {
-  color: #FE792D;
+  color: #ff8843;
 }
 
 h2 {
   margin: 0;
-  color:#FE792D;
+  color:#ff8843;
 }
 
 h3 {
@@ -67,10 +66,14 @@ main, .main-page {
 
 .nav-bar-item {
   height: 50px;
+  background-color: #324C54;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
+  border-style: none;
 }
+
 .nav-bar-item:hover {
   cursor: pointer;
 }
@@ -90,19 +93,22 @@ main, .main-page {
 .underline-box {
   height: 3px;
   width: 146px;
-  background-color: #FE792D;
+  background-color: #ff8843;
+}
+
+.filter-sidebar-header {
+  margin-left: -20px;
 }
 
 .filter-section {
   height: 90%;
   width: 20%;
   border-radius: 25px;
+  background-color: white;
+  padding-left: 20px;
   overflow: hidden;
   box-shadow: inset  2px 2px 3px 2px #ffffff,
   2px 2px 4px 2px #1d1d1d;
-}
-label:hover{
-    cursor: pointer;
 }
 
 .recipes-wrapper {
@@ -305,6 +311,13 @@ transform: scale(1.1);
   width: 100%;
   grid-row: span 3;
   padding: 0;
+  padding-right: -20px;
+  padding-bottom: 50px;
+  background-color: white;
+}
+
+.pantry-sidebar-header{
+  margin-right: -20px;
 }
 
 .user-pantry {
@@ -312,8 +325,10 @@ transform: scale(1.1);
   height: 100%;
   width: 100%;
   padding: 0;
+  padding-left: 20px;
   overflow-x: hidden;
   overflow-y: scroll;
+  border-radius: 25px;
 }
 
 .user-pantry-wrapper {
@@ -332,8 +347,8 @@ transform: scale(1.1);
 
 
 .recipes-to-cook {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 83.5%;
   grid-column-start: 2;
   grid-row: 2 / 5;
   overflow-y: scroll;
@@ -341,7 +356,8 @@ transform: scale(1.1);
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
-
+  background-color: white;
+  margin-left: 20px;
 }
 
 
@@ -352,12 +368,18 @@ transform: scale(1.1);
   width: 100%;
   display:flex;
   flex-direction: column;
+  margin-left: 20px;
 }
 
 .recipe-to-cook {
   height: 100%;
   width: 80%;
-  overflow-y: scroll
+  overflow-y: scroll;
+  background-color: white;
+  padding-left: 40px;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
 }
 
 
