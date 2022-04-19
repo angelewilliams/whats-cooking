@@ -3,7 +3,6 @@ const getData = (fetchAPI) => {
     .then(response => response.json())
     .catch(error => console.log(error))
 }
-//add post here
 
 const postData = (formData) => {
   return fetch(`http://localhost:3001/api/v1/users`,
@@ -21,7 +20,6 @@ const postData = (formData) => {
   })
   .catch(error => console.log(error))
 }
-
 
 const userData = getData('users');
 const recipeData = getData('recipes');
