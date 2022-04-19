@@ -27,7 +27,7 @@ Saved Recipe
 
 ### About The Project
 
-![What's Cooking?!](https://user-images.githubusercontent.com/43621994/161454532-c8cd921c-c249-4021-8e18-b9d73df796e6.png)
+![What's Cooking?!](src/images/WCAllRecipes.png)
 
 What's Cooking? It's a question we all have had at some point or another, and its a question we were tasked to solve
 by Turing School of Software and Design. We were given two weeks to build a fully functional app using a starter repo,
@@ -88,11 +88,11 @@ This will run the webpack in the terminal so you can view and use the applicatio
 Now that we are all set up for the application, its time for its actual use! When you load the page, You are met with a webpage with a couple basic features. The first is a nav bar, which will allow you to move between three pages: All Recipes, a Saved Recipes section and the "My Kitchen" view where users can see their recipes to cook and their pantry. In both of these pages you are able to filter by a couple different tags using the filters section.
 The All Recipes section displays a preview of each recipe with a name, an image, and the ability to save the recipe and or add it to your 'to cook' list, that can be referenced in the Kitchen.  
 
-![Main Page Application](https://user-images.githubusercontent.com/43621994/161454532-c8cd921c-c249-4021-8e18-b9d73df796e6.png)
+![Main Page Application](src/images/WCAllRecipes.png)
 
 If you click on a recipe preview, you will see a popup that shows the details of the recipe. This includes a name, image and the save and cook buttons, and the recipe content. At the end of the ingredients list, you will see a total (and reasonable, we're sure) cost of the recipe so you can plan out the cost of your meals.
 
-![Popup Preview](https://user-images.githubusercontent.com/43621994/161584095-e1fb7d26-6f17-4430-bf75-3039e22b06f0.png)
+![Popup Preview](src/images/WCPopoutRecipe.png)
 
 When viewing all recipes or Saved Recipes, you can select a filter or use the search bar to view a curated subset of the recipes that match your criteria.
 When a filter is clicked, the page displays a list of only the recipes with the tag included in the filter or content of the search bar. You can clear your selection with the reset.
@@ -101,11 +101,11 @@ When a filter is clicked, the page displays a list of only the recipes with the 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-![Saved Section Preview](https://user-images.githubusercontent.com/43621994/161586318-0c4e0823-679c-48e6-a0fd-2416babc66c4.png)
+![Saved Section Preview](src/images/WCSavedRecipes.png)
 
 Once you've added recipes to cook, you can go to your Kitchen view and see your virtual pantry to check if you have enough ingredients to cook the selected recipe. If you do not have enough of an ingredient to cook the recipe you will be shown a grocery list and be able to add those ingredients to your pantry, right from your Kitchen
 
-![My Kitchen Preview](please add picture of kitchen here)
+![My Kitchen Preview](src/images/WCRecipesToCook.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
