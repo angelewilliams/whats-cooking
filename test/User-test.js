@@ -47,7 +47,7 @@ describe('User', () => {
     expect(user.favoriteRecipes[0].id).to.equal(595736);
     expect(user.favoriteRecipes[1].id).to.equal(678353);
     expect(user.favoriteRecipes[1]).to.equal(recipe2);
-  })
+  });
 
   it('should be able to add a recipe to recipesToCook', () => {
     user.addRecipeToCook(recipe2);
@@ -76,4 +76,4 @@ describe('User', () => {
     expect(output[0].name).to.equal(recipe1.name);
   });
 
-})
+});

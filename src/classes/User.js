@@ -55,8 +55,8 @@ class User {
         inputName.toLowerCase().split(' ').forEach((input) => {
             if(!recipe.name.toLowerCase().includes(input)) {
               output = false
-            }
-          })
+            };
+          });
           return output
         });
       };

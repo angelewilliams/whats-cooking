@@ -4,11 +4,10 @@ import Ingredient from '../src/classes/Ingredient';
 const { recipeData, ingredientsData } = require('../src/data/sampleDatasets');
 
 describe('Recipe', () => {
-	let recipe, recipe2;
+	let recipe;
 
 	beforeEach(() => {
 		recipe = new Recipe(recipeData[0], ingredientsData)
-		recipe2 = new Recipe(recipeData[1], ingredientsData)
 	});
 
 	it('should be a function', () => {
@@ -53,7 +52,7 @@ describe('Recipe', () => {
 
 	it('should have be able to calculate the cost of its ingredients', () => {
 		let output = recipe.calculateCost();
-		expect(output).to.equal(16456);
+		expect(output).to.equal(16953);
 	})
 
 	it('should return an array of instructions', () => {

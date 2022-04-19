@@ -48,10 +48,11 @@ describe('Recipe Repository', () => {
     expect(output[0].id).to.equal(595736);
     expect(output.length).to.equal(1);
   });
+
   it('should be able to record all individual tags from the data set', () => {
     repository.getTags(recipeData);
     const cookieTag = recipeData[0].tags[0];
     expect(repository.tags[0]).to.equal(cookieTag);
-  })
+  });
 
-})
+});
